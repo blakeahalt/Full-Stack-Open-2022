@@ -64,6 +64,7 @@ const Part = (props) => {
   return(
       <p>
         {props.content.name} {props.content.exercises}
+        console.log(props)
       </p>
   )
 }
