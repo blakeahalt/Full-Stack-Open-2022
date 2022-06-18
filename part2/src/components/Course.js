@@ -42,6 +42,7 @@ const Course = ({ course }) => {
 };
 
 
+
 function App() {
 	const courses = [
 		{
