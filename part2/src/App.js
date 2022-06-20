@@ -11,7 +11,6 @@ import { useState } from 'react'
 //     event.preventDefault()
 //     console.log('clicked addName', event.target)
 //     const currentPerson = persons.filter((person) => person.name === newName.name);
-    
   
 //   const handleNameChange = (event) => {
 //     setNewName(event.target.value);
@@ -34,7 +33,7 @@ import { useState } from 'react'
 const Person = ({person}) => {
   return(
     <div key={person.id}>
-      <li>{person.name} {person.number} {person.id}</li> 
+      <li>{person.name} {person.number}</li> 
     </div>
   );
 };
@@ -44,7 +43,7 @@ const App = () => {
   const [persons, setPersons] = useState([{
     name: 'Arto Hellas',
     number: '040-123456',
-    id: ['']
+    id: []
     }]) 
   
   const [newName, setNewName] = useState("")
@@ -56,16 +55,27 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber,
-      id: newPersons.id
+      id: persons.length
       }
-      setPersons(persons.concat(newPerson))
-      setNewName('')
-      setNewNumber('')
-    }
+      
+      // if ({persons} === {newName}) {
+      //     alert(`${newName} already exists!`)
+      // } else {
+        // newPerson.name: newName;
+        // if (persons.map(person => person.name === newName)) {
+        //     alert(`message`)
+        // } else {
+        //   const newPerson = { name: newName }
+        setPersons(persons.concat(newPerson))
+        setNewName('')
+        setNewNumber('')
+      }
+    
 
     const handleFilterChange = (event) => {
       setNewFilter(event.target.value)
     };
+
     const handleNameChange = (event) => {
       setNewName(event.target.value)
     };
@@ -92,10 +102,13 @@ const App = () => {
 //       <li key={person.name}>{person}</li>
 // )
 
-  return (
-    <div>
+// window.alert("Warning!!");
+  
+return (
+  <div>
       <h1>Phonebook</h1>
-      <div>filter: <input value={null} onChange={handleFilterChange} /></div>
+      <div>filter: <input value={''} onChange={handleFilterChange} /></div>
+      
       {/* <div>
         <button onClick={() => setShowAll(!showAll)}>
         show {showAll ? 'important' : 'all' }
@@ -116,10 +129,7 @@ const App = () => {
       </div>
     </div>
   )
+
 }
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 17b8c4803b043b276192e7e05a03aa4d9981612c
 export default App
