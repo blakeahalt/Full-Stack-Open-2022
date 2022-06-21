@@ -313,3 +313,204 @@ const App = () => {
 }
 
 export default App
+import { useState } from 'react';
+import Form from './components/Form.js';
+import Person from './components/Person.js'
+import Filter from './components/Filter.js'
+// const App = () => {
+//   const [persons, setPersons] = useState([
+//     { name: 'Arto Hellas' }
+//   ]) 
+
+//   const [newName, setNewName] = useState('')
+
+//   const addName = (event) => {
+//     event.preventDefault()
+//     console.log('clicked addName', event.target)
+//     const currentPerson = persons.filter((person) => person.name === newName.name);
+
+//   const handleNameChange = (event) => {
+//     setNewName(event.target.value);
+//   }
+
+//   function nameAdd() {
+//     persons([newName, ...names]);
+//     setNewName('');
+//   }
+
+//   const Person = ({persons}) => 
+//       {persons.map((person => {
+//         return(
+//         <li key={person.name}>{person}</li>
+//       )}
+//       ))
+//     }  
+
+
+// const Person = ({ persons }) => {
+//   return (
+//     <div key={persons.name}>
+//       {persons.map((person) =>
+//         <li>{person.name} {person.number} </li>)}
+//     </div>
+//   )
+// }
+
+// const personsDeep = (persons) => {
+//   console.log(personsDeep)
+//   console.log(persons)
+//   return(
+//     <div>
+//       {personsDeep}
+//     </div>
+//     //  personsDeep = JSON.parse(JSON.stringify(persons))
+//   )
+// }
+
+
+const App = () => {
+  const [persons, setPersons] = useState([])
+  const [newName, setNewName] = useState()
+  const [newNumber, setNewNumber] = useState('')
+  const [newFilter, setNewFilter] = useState('')
+  // if(persons.includes(newName)) {
+  //     alert(`${newName} already exists`)
+  // }
+  // const filtered = persons.filter(obj => {
+  //   if (obj.persons === newName) {
+  //     return(
+  //       alert(`${newName} already exists`)
+  //     )
+  //   } else {
+  //     return persons.name === newName;
+  //   }
+  // });
+
+  const addName = (event) => {
+    event.preventDefault()
+    if (persons.find((p) => p.name === newName)) {
+      window.alert("Name already exists!");
+      return false;
+    }
+      const newPerson = {
+      name: newName,
+      number: newNumber,
+      id: persons.length
+    }; 
+      setPersons((persons.concat(newPerson)))
+      
+    // setPersons((persons.concat(newPerson)))
+  
+    
+    // setPersons(persons.concat(newPerson))
+    
+    // console.log("newPerson", newPerson)
+    console.log("persons", persons)
+    console.log("newName", newName)
+    setNewName('')
+    setNewNumber('')
+  }
+  
+  
+  
+  // const newPerson = {
+  //   name: newName,
+  //   number: newNumber,
+  //   id: persons.length
+  // }
+
+  
+  // const personsDeep = () => {
+  //   return(
+  //   JSON.stringify(persons)
+  //   )
+  // }
+
+  // if (personsDeep === newName) {
+  //   alert(`Nah`)
+  // } else {
+  //   setNewName("yup")
+  // }
+
+  
+  // const includes = persons.filter(objName => {
+  //   objName.name = newPerson 
+  //   console.log(objName.name)
+  // })
+  // console.log("includes", includes)
+
+  // if (includes) {
+  //   alert(`${newName} already exists`)
+  // } else { 
+  //   // persons.name = newName
+  //   newPerson.name = newName
+
+  // if ({persons} === {newName}) {
+  //     alert(`${newName} already exists!`)
+  // } else {
+  // newPerson.name: newName;
+  // if (persons.map(person => person.name === newName)) {
+  //     alert(`message`)
+  // } else {
+  //   const newPerson = { name: newName }
+  // setPersons()
+
+  // const handleSetPersons = (newPerson) => {
+  //   setPersons((persons.concat(newPerson)))
+  // }
+
+  const handleNameChange = (event) => {
+    setNewName(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+  };
+
+  const handleFilterChange = (event) => {
+    setNewFilter(event.target.value)
+    const regex = new RegExp( newFilter, 'i' );
+    const filteredPersons = () => persons.filter(person => person.name.match(regex))
+    setPersons(filteredPersons)}
+
+  // const notesToShow = showAll
+  // ? notes
+  // : notes.filter(note => note.important === true)
+
+  // const result = condition ? val1 : val2
+  // notes.filter(note => note.important)
+
+  // show {showAll ? 'important' : 'all'}
+  // () => setShowAll(!showAll)
+  //   persons.map(person =>
+  //       <li key={person.name}>{person}</li>
+  // )
+
+  // window.alert("Warning!!");
+  
+
+  return (
+    <div>
+      <h2>Phonebook</h2>
+
+      <Filter value={newFilter} onChange={handleFilterChange} />
+
+      {/* <div>
+        <button onClick={() => setShowAll(!showAll)}>
+        show {showAll ? 'important' : 'all' }
+        </button>
+      </div> */}
+      <h3>Add a new</h3>
+
+      <Form onSubmit={addName} addName={addName} newName={newName} handleNameChange={handleNameChange} newNumber={newNumber} handleNumberChange={handleNumberChange} setPersons={setPersons} persons={persons} />
+
+      <h1>Numbers</h1>
+
+      <Person key={persons.name} persons={persons}  />
+
+    </div>
+  )
+}
+
+
+export default App
