@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Form = ({addName, newName, handleNameChange,newNumber, handleNumberChange, handleSetPersons, setPersons, persons}) => {
+const Form = ({addName, newName, handleNameChange, newNumber, handleNumberChange, persons}) => {
 	return (
 	<div key={persons.id}>
 		<form onSubmit={addName}>
@@ -10,7 +10,7 @@ const Form = ({addName, newName, handleNameChange,newNumber, handleNumberChange,
 			<div>
 				number: <input value={newNumber} onChange={handleNumberChange} />
 			</div>
-			<button type="submit" onClick={handleSetPersons}>add</button>
+			<button type="submit">add</button>
 		</form>
 	</div>
 	)	

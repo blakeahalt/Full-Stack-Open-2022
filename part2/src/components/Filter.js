@@ -1,8 +1,12 @@
 import React from 'react'
 
-const Filter = ({value, onChange}) =>
-  <div>
-    filter shown with <input value={value} onChange={onChange} />
-  </div>
+const Filter = ({ newFilter, handleFilter }) => {
+	return(
+		<div>
+			Filter persons:{" "}
+			<input type="text" value={newFilter} onChange={handleFilter} />
+		</div>
+	)
+}
 
 export default Filter 
