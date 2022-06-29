@@ -22,17 +22,16 @@ const App = () => {
       })
 	 }, [])
    
-   const resetNotification = () => {
+	const resetNotification = () => {
 		setTimeout(() => {
 			setMessage({})
 		}, 3000)
 	};
 
-
-   const filteredPerson = !newFilter
-   ? persons
-   : persons.filter((person) =>
-   person.name.toLowerCase().includes(newFilter.toLowerCase()))
+	const filteredPerson = !newFilter
+	   ? persons
+	   : persons.filter((person) =>
+	   person.name.toLowerCase().includes(newFilter.toLowerCase()))
    
 const addName = (event) => {
   event.preventDefault()
