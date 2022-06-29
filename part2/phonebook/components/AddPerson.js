@@ -1,6 +1,6 @@
 import React from 'react'
 
-const AddPerson = ({ addName, newName, handleNameChange, newNumber, handleNumberChange, persons }) => (
+const AddPerson = ({ addName, newName, handleNameChange, newNumber, handleNumberChange, persons, setMessage}) => (
 	<div key={persons}>
         <form onSubmit={addName}>
               <div>
@@ -13,6 +13,7 @@ const AddPerson = ({ addName, newName, handleNameChange, newNumber, handleNumber
 
               <div>
                 <button type='submit'>Add</button>
+                <div>{setMessage}</div>
               </div>
         </form>
     </div>

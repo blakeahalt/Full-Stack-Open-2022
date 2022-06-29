@@ -4,7 +4,7 @@ import Person from './Person.js';
 const PhoneBook = ({ persons, remove, update }) => (
     <div>
         <h2>Phone Book</h2>
-        <ul>
+		<div key={persons.id} style={{ margin: '5px', padding: '5px' }}></div>
             {persons.map(person => {
                 return (
                     <Person 
@@ -15,7 +15,6 @@ const PhoneBook = ({ persons, remove, update }) => (
                     />
                 )
             })}
-        </ul>
     </div>
 );
 
