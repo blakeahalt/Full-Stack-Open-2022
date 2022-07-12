@@ -28,30 +28,30 @@ morgan.token('body', req =>
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let users =[
-  { 
-    "id": 1,
-    "name": "Arto Hellas", 
-    "number": "040-123456"
+  {
+    "name": "Barbara",
+    "number": "508-757-4523",
+    "id": "79"
   },
-  { 
-    "id": 2,
-    "name": "Ada Lovelace", 
-    "number": "39-44-5323523"
+  {
+    "name": "William",
+    "number": "508-894-5974",
+    "id": "45"
   },
-  { 
-    "id": 3,
-    "name": "Dan Abramov", 
-    "number": "12-43-234345"
+  {
+    "name": "Cyrus",
+    "number": "415-422-5332",
+    "id": "78"
   },
-  { 
-    "id": 4,
-    "name": "Mary Poppendieck", 
-    "number": "39-23-6423122"
+  {
+    "name": "Katie",
+    "number": "508-890-5320",
+    "id": "12"
   },
-  { 
-    "id": 6,
-    "name": "Blake", 
-    "number": "508-299-9373"
+  {
+    "name": "Tim",
+    "number": "508-299-9373",
+    "id": "86"
   }
 ]
 
@@ -87,7 +87,7 @@ let users =[
 
 const getRandomInt = (min, max) => {
 	min = Math.ceil(1);
-	max = Math.floor(100);
+	max = Math.floor(1000);
 	return Math.floor(Math.random() * (max - min) + min); 
   }
 
@@ -95,14 +95,14 @@ const generateId =() => {
   return getRandomInt()
 }
 
-app.post('/api/persons/', (request, response) => {
+app.post('/api/persons/', (request, response, next) => {
   const body = request.body
 
-  // if (body.name && body.number === undefined) {
+  // if (body.name || body.number === undefined) {
   //   return response.status(400).json({ error: 'content missing' })
   // }
 
-  const user = new User({
+  const user = new User ({
     _id: generateId(),
     name: body.name,
     number: body.number,
@@ -114,17 +114,6 @@ app.post('/api/persons/', (request, response) => {
       return response.status(400).json({ 
         error: 'That name already exists' 
       })
-      // let res = window.confirm(`${newName} already exists. To update a new number, click to confirm.`)
-      // if (res) {
-      //   noteService
-      //   .update(isFound.id, newPerson)
-      //   .then(updatedPerson => {
-      //     setPersons(persons.map(person => person.id ? person : updatedPerson))
-      //     setMessage(
-      //       {message:`Successfully updated ${newName}'s number!`,
-      //       type: "success"})
-      //     })
-      //   }
     } else if (!body.name && !body.number) {
         return response.status(400).json({ 
           error: 'No name or number' 
@@ -145,18 +134,20 @@ app.post('/api/persons/', (request, response) => {
     user.save().then(users => {
       response.json(users)
     })
+    .catch((error) => next(error));
   })
 
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
+  // const {name, number} = request.body
 
   const user = {
-    _id: generateId(),
+    id: generateId(),
     name: body.name,
     number: body.number,
   }
 
-  User.findByIdAndUpdate(request.params.id, user, { new: true })
+  User.findByIdAndUpdate(request.params.id, user, { new: true, runValidators: true, context: "query"})
     .then(updatedUser => {
       response.json(updatedUser)
     })
@@ -214,7 +205,9 @@ app.get('/api/persons', (request, response) => {
 
 app.get('/info', (request, response) => {
 	const dateInfo = new Date()
-	response.send(`<h2>Phonebook has info for ${user.length} people</h2><h2>${dateInfo}</h2>`)
+  User.find({}).then(users => {
+    response.send(`<h2>Phonebook has info for ${users.length} people</h2><h2>${dateInfo}</h2>`)
+  })
 	// response.json(info)
   })
 
