@@ -20,38 +20,37 @@ app.use(express.json())
 app.use(cors())
 app.use(express.static('build'))
 
-morgan.token('body', req => 
-{
+morgan.token('body', req => {
   return JSON.stringify(req.body)
 })
 
 app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
-let users =[
+let users = [
   {
-    "name": "Barbara",
-    "number": "508-757-4523",
-    "id": "79"
+    'name': 'Barbara',
+    'number': '508-757-4523',
+    'id': '79'
   },
   {
-    "name": "William",
-    "number": "508-894-5974",
-    "id": "45"
+    'name': 'William',
+    'number': '508-894-5974',
+    'id': '45'
   },
   {
-    "name": "Cyrus",
-    "number": "415-422-5332",
-    "id": "78"
+    'name': 'Cyrus',
+    'number': '415-422-5332',
+    'id': '78'
   },
   {
-    "name": "Katie",
-    "number": "508-890-5320",
-    "id": "12"
+    'name': 'Katie',
+    'number': '508-890-5320',
+    'id': '12'
   },
   {
-    "name": "Tim",
-    "number": "508-299-9373",
-    "id": "86"
+    'name': 'Tim',
+    'number': '508-299-9373',
+    'id': '86'
   }
 ]
 
@@ -86,68 +85,80 @@ let users =[
 // })
 
 const getRandomInt = (min, max) => {
-	min = Math.ceil(1);
-	max = Math.floor(1000);
-	return Math.floor(Math.random() * (max - min) + min); 
-  }
+  min = Math.ceil(1)
+  max = Math.floor(1000)
+  return Math.floor(Math.random() * (max - min) + min)
+}
 
-const generateId =() => {
+const generateId = () => {
   return getRandomInt()
 }
 
-app.post('/api/persons/', (request, response, next) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
   // if (body.name || body.number === undefined) {
   //   return response.status(400).json({ error: 'content missing' })
   // }
 
-  const user = new User ({
+  const user = new User({
     _id: generateId(),
     name: body.name,
     number: body.number,
   })
-  
+
+
   const foundPerson = users.find(user => user.name === body.name)
 
-    if (foundPerson) {
-      return response.status(400).json({ 
-        error: 'That name already exists' 
-      })
-    } else if (!body.name && !body.number) {
-        return response.status(400).json({ 
-          error: 'No name or number' 
-        })
-    } else if (!body.number) {
-        return response.status(400).json({ 
-          error: 'No number' 
-        })
-    } else if (!body.name) {
-        return response.status(400).json({ 
-          error: 'No name' 
-        })
-    }
-
-    users = users.concat(user)
-    // response.json(person)
-    
-    user.save().then(users => {
-      response.json(users)
+  if (foundPerson) {
+    return response.status(400).json({
+      error: 'That name already exists'
     })
-    .catch((error) => next(error));
-  })
-
-app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body
-  // const {name, number} = request.body
-
-  const user = {
-    id: generateId(),
-    name: body.name,
-    number: body.number,
+  } else if (body.name.length < 3) {
+    return response.status(400).json({
+      error: 'Name must have at least 3 letters.'
+    })
+  } else if (body.number.length < 8) {
+    return response.status(400).json({
+      error: 'Number must be at least 8 digits.'
+    })
+  } else if (!body.name && !body.number) {
+    return response.status(400).json({
+      error: 'No name or number'
+    })
+  } else if (!body.number) {
+    return response.status(400).json({
+      error: 'No number'
+    })
+  } else if (!body.name) {
+    return response.status(400).json({
+      error: 'No name'
+    })
   }
 
-  User.findByIdAndUpdate(request.params.id, user, { new: true, runValidators: true, context: "query"})
+  users = users.concat(user)
+  // response.json(person)
+
+  user.save().then(users => {
+    response.json(users)
+  })
+    .catch((error) => next(error))
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const { name, number } = request.body
+  // const {name, number} = request.body
+
+  // const user = {
+  //   id: generateId(),
+  //   name: body.name,
+  //   number: body.number,
+  // }
+
+  User.findByIdAndUpdate(
+    request.params.id,
+    { name, number },
+    { new: true, runValidators: true, context: 'query' })
     .then(updatedUser => {
       response.json(updatedUser)
     })
@@ -160,30 +171,30 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
   // response.status(204).end()
   User.findByIdAndRemove(request.params.id)
-  .then(result => {
-    response.status(204).end()
-  })
-  .catch(error => next(error))
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
 
 })
 
 
 app.get('/api/persons/:id', (request, response, next) => {
-//   const id = Number(request.params.id)
-//   const body = persons.find(person => person.id === id)
+  //   const id = Number(request.params.id)
+  //   const body = persons.find(person => person.id === id)
 
-//   if (body) {
-//     response.json(body)
-//     morgan.token('body', req => 
-// {
-//   return JSON.stringify(req.body)
-// })
-//   } else {
-//     return (
-//       response.send("HTTP Error 404: Not Found"),
-//       response.status(404).end()
-//       )
-//   }
+  //   if (body) {
+  //     response.json(body)
+  //     morgan.token('body', req =>
+  // {
+  //   return JSON.stringify(req.body)
+  // })
+  //   } else {
+  //     return (
+  //       response.send("HTTP Error 404: Not Found"),
+  //       response.status(404).end()
+  //       )
+  //   }
   User.findById(request.params.id)
     .then(user => {
       if (user) {
@@ -193,7 +204,7 @@ app.get('/api/persons/:id', (request, response, next) => {
       }
     })
     .catch(error => next(error))
-    })
+})
 
 app.get('/api/persons', (request, response) => {
   // const id = Number(request.params.id)
@@ -204,12 +215,12 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-	const dateInfo = new Date()
+  const dateInfo = new Date()
   User.find({}).then(users => {
     response.send(`<h2>Phonebook has info for ${users.length} people</h2><h2>${dateInfo}</h2>`)
   })
-	// response.json(info)
-  })
+  // response.json(info)
+})
 
 
 const unknownEndpoint = (request, response) => {
@@ -217,6 +228,20 @@ const unknownEndpoint = (request, response) => {
 }
 
 app.use(unknownEndpoint)
+
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') {
+    return response.status(400).send({ error: 'malformatted id' })
+  } else if (error.name === 'ValidationError') {
+    return response.status(400).json({ error: error.message })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
 
 const PORT = process.env.PORT
 app.listen(PORT, () => {
