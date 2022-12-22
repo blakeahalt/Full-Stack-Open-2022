@@ -258,10 +258,10 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 const PORT = process.env.PORT
-app.listen(PORT, "0.0.0.0")
-// app.listen(PORT, "0.0.0.0", () => {
-//   console.log(`Server running on port ${PORT}`)
-// })
+// app.listen(PORT, "0.0.0.0")
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
 
 // const start = async () => {
 //   try {
