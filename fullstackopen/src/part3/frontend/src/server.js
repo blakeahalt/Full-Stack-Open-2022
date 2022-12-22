@@ -62,10 +62,11 @@ let users = [
   }
 ]
 
-// const mongoose = require('mongoose')
 
 // // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 // const url = `mongodb+srv://blakeahalt:${password}@cluster0.nrpgtan.mongodb.net/Person?retryWrites=true&w=majority`
+
+// const mongoose = require('mongoose')
 // mongoose.set('strictQuery', true)
 // const url = process.env.MONGODB_URI
 // mongoose.connect(url)
@@ -258,7 +259,7 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 const PORT = process.env.PORT
-app.listen("0.0.0.0", () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`Server running on port ${PORT}`)
 })
 
