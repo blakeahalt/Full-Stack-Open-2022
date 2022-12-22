@@ -6,7 +6,7 @@ import AddPerson from './components/AddPerson.js';
 import PhoneBook from './components/PhoneBook.js';
 import Notification from './components/Notification.js';
 import './index.css'
-// import axios from 'axios'
+import axios from 'axios'
 
 
 const App = () => {
@@ -19,20 +19,20 @@ const App = () => {
   const [newFilter, setNewFilter] = useState('')
   const [messageDetails, setMessage] = useState({})
 
-  useEffect(() => {
-    noteService
-        .getAll()
-        .then(response => {
-            setPersons(response)
-        })
-     }, [])
   // useEffect(() => {
-  //   axios
-  //     .get('http://localhost:3001/api/persons')
-  //     .then(res => {
-  //       setPersons(res.data)
-  //     })
-  // }, [])
+  //   noteService
+  //       .getAll()
+  //       .then(response => {
+  //           setPersons(response)
+  //       })
+  //    }, [])
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/api/persons')
+      .then(res => {
+        setPersons(res.data)
+      })
+  }, [])
   
   const resetNotification = () => {
   setTimeout(() => {
