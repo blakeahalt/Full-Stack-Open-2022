@@ -1,13 +1,10 @@
-require('dotenv').config()
+require('dotenv').config({ path: './.env' })
+// require('dotenv').config()
 const express = require('express')
-const mongoose = require('mongoose')
-// const url = process.env.MONGODB_URI
-mongoose.set('strictQuery', true)
-// mongoose.connect(url)
 const app = express()
 app.use(express.static('build'))
 app.use(express.json())
-const User = require('./models/person')
+// const User = require('./models/person')
 const cors = require('cors')
 app.use(cors())
 // const morgan = require('morgan')
@@ -62,51 +59,62 @@ let users = [
 // // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 // const url = `mongodb+srv://blakeahalt:${password}@cluster0.nrpgtan.mongodb.net/Person?retryWrites=true&w=majority`
 
-// const mongoose = require('mongoose')
+const mongoose = require('mongoose')
 // // import mongoose from 'mongoose';
-// mongoose.set('strictQuery', true)
-// const url = process.env.MONGODB_URI
+mongoose.set('strictQuery', true)
+const url = process.env.MONGODB_URI
 
-// console.log('connecting...')
+console.log('connecting...')
 
-// mongoose.connect(url)
-//   .then(result => {
-//     console.log('connected to MongoDB')
-//   })
-//   .catch((error) => {
-//     console.log('error connecting to MongoDB:', error.message)
-//   })
+mongoose.connect(url)
+  .then(result => {
+    console.log('connected to MongoDB')
+  })
+  .catch((error) => {
+    console.log('error connecting to MongoDB:', error.message)
+  })
 
-// const userSchema = new mongoose.Schema({
-//   _id: String,
-//   name: String,
-//   number: String,
-// })
+const userSchema = new mongoose.Schema({
+  _id: String,
+  name: String,
+  number: String,
+})
 
-// userSchema.set('toJSON', {
-//   transform: (document, returnedObject) => {
-//     returnedObject.id = returnedObject._id.toString()
-//     delete (returnedObject._id)
-//     delete (returnedObject.__v)
-//   }
-// })
+// // const userSchema = new mongoose.Schema({
+// //   _id: {
+// //     type: String
+// //   },
+// //   name: {
+// //     type: String,
+// //     minLength: [3, 'Minimum allowed name length is 3'],
+// //     required: true
+// //   },
+// //   number: {
+// //     type: String,
+// //     minLength: [8, 'Please include at least 8 digits'],
+// //     required: true,
+// //     validate: {
+// //       validator: function(v) {
+// //         // return /^\s*\d{2,3}-\d{7,8}\s*$/.test(v)
+// //         return /^\d{2,3}-\d+$/.test(v)
+// //       },
+// //       message: '12-1234567 or 12-12345678 or 123-123-4567 or 123-123-4567 are acceptable'
+// //     }
+// //   }
+// // })
 
-// const User = mongoose.model('User', userSchema)
+userSchema.set('toJSON', {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete (returnedObject._id)
+    delete (returnedObject.__v)
+  }
+})
 
-// const userSchema = new mongoose.Schema({
-//   name: String,
-//   number: String,
-// })
 
-// const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', userSchema)
 
-// userSchema.set('toJSON', {
-//   transform: (document, returnedObject) => {
-//     returnedObject.id = returnedObject._id.toString()
-//     delete returnedObject._id
-//     delete returnedObject.__v
-//   }
-// })
+
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(1)
@@ -117,6 +125,11 @@ const getRandomInt = (min, max) => {
 const generateId = () => {
   return getRandomInt()
 }
+
+// app.get('/', (req, res) => {
+//   // eslint-disable-next-line
+//   res.send(build / index.html)
+// })
 
 // http://localhost:3001/api/persons
 // app.post('/api/persons', (request, response, next) => {
@@ -135,6 +148,7 @@ app.post('/api/persons', (request, response, next) => {
     name: body.name,
     number: body.number,
   })
+
 
 
   const foundPerson = users.find(user => user.name === body.name)
@@ -272,8 +286,14 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-const PORT = process.env.PORT
-app.listen(PORT, "0.0.0.0")
+// const PORT = process.env.PORT
+// app.listen(PORT, "0.0.0.0")
+
+const PORT = process.env.PORT || 3001
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`)
+})
+
 // app.listen(PORT, "0.0.0.0", () => {
 //   console.log(`Server running on port ${PORT}`)
 // })

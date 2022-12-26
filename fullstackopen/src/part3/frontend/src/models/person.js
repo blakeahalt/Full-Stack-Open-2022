@@ -3,8 +3,6 @@ const mongoose = require('mongoose')
 mongoose.set('strictQuery', true)
 const url = process.env.MONGODB_URI
 
-
-
 console.log('connecting...')
 
 mongoose.connect(url)
@@ -15,33 +13,33 @@ mongoose.connect(url)
     console.log('error connecting to MongoDB:', error.message)
   })
 
-const userSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  number: String,
-})
-
 // const userSchema = new mongoose.Schema({
-//   id: {
-//     type: String
-//   },
-//   name: {
-//     type: String,
-//     minLength: [3, 'Minimum allowed name length is 3'],
-//     required: true
-//   },
-//   number: {
-//     type: String,
-//     minLength: [8, 'Please include at least 8 digits'],
-//     required: true,
-//     validate: {
-//       validator: function(v) {
-//         return /^\s*\d{2,3}-\d{7,8}\s*$/.test(v)
-//       },
-//       message: '12-1234567 or 12-12345678 or 123-123-4567 or 123-123-4567 are acceptable'
-//     }
-//   }
+//   _id: String,
+//   name: String,
+//   number: String,
 // })
+
+const userSchema = new mongoose.Schema({
+  _id: {
+    type: String
+  },
+  name: {
+    type: String,
+    minLength: [3, 'Minimum allowed name length is 3'],
+    required: true
+  },
+  number: {
+    type: String,
+    minLength: [8, 'Please include at least 8 digits'],
+    required: true,
+    validate: {
+      validator: function(v) {
+        return /^\d{3}-\d{3}-\d{4}$|^\d{2}-\d{7}$|^\d{2}-\d{8}$|^\d{3}\d{3}-\d{4}$|^\d{2}\d{7}$|^\d{2}\d{8}$/.test(v)
+      },
+      message: '12-1234567 or 12-12345678 or 123-123-4567 are acceptable'
+    }
+  }
+})
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {

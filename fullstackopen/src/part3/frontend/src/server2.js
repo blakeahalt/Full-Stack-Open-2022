@@ -1,3 +1,6 @@
+// if (process.env.NODE_ENV !== 'production') {
+//   require('dotenv').config()
+// }
 require('dotenv').config()
 const express = require('express')
 // const mongoose = require('mongoose')
@@ -7,28 +10,9 @@ const express = require('express')
 const app = express()
 app.use(express.static('build'))
 app.use(express.json())
-// const User = require('./models/person')
+const User = require('./models/person')
 const cors = require('cors')
 app.use(cors())
-// const morgan = require('morgan')
-
-// const { user } = require('pg/lib/defaults')
-
-// const requestLogger = (request, response, next) => {
-// 	console.log('Method:', request.method)
-// 	console.log('Path:  ', request.path)
-// 	console.log('Body:  ', request.body)
-// 	console.log('---')
-// 	next()
-//   }
-
-// app.use(requestLogger)
-
-// morgan.token('body', req => {
-//   return JSON.stringify(req.body)
-// })
-
-// app.use(morgan(':method :url :status :res[content-length] - :response-time ms :body'))
 
 let users = [
   {
@@ -62,51 +46,38 @@ let users = [
 // // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 // const url = `mongodb+srv://blakeahalt:${password}@cluster0.nrpgtan.mongodb.net/Person?retryWrites=true&w=majority`
 
-const mongoose = require('mongoose')
-// import mongoose from 'mongoose';
-mongoose.set('strictQuery', true)
-const url = process.env.MONGODB_URI
+// const mongoose = require('mongoose')
+// // import mongoose from 'mongoose';
+// mongoose.set('strictQuery', true)
+// const url = process.env.MONGODB_URI
 
-console.log('connecting...')
+// console.log('connecting...')
 
-mongoose.connect(url)
-  .then(result => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
-
-const userSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  number: String,
-})
-
-userSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete (returnedObject._id)
-    delete (returnedObject.__v)
-  }
-})
-
-const User = mongoose.model('User', userSchema)
+// mongoose.connect(url)
+//   .then(result => {
+//     console.log('connected to MongoDB')
+//   })
+//   .catch((error) => {
+//     console.log('error connecting to MongoDB:', error.message)
+//   })
 
 // const userSchema = new mongoose.Schema({
+//   _id: String,
 //   name: String,
 //   number: String,
 // })
 
-// const User = mongoose.model('User', userSchema)
-
 // userSchema.set('toJSON', {
 //   transform: (document, returnedObject) => {
 //     returnedObject.id = returnedObject._id.toString()
-//     delete returnedObject._id
-//     delete returnedObject.__v
+//     delete (returnedObject._id)
+//     delete (returnedObject.__v)
 //   }
 // })
+
+// const User = mongoose.model('User', userSchema)
+
+
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(1)
@@ -136,34 +107,37 @@ app.post('/api/persons', (request, response, next) => {
     number: body.number,
   })
 
+  app.get('/api/persons', (req, res) => {
+    res.json(users)
+  })
 
-  const foundPerson = users.find(user => user.name === body.name)
+  // const foundPerson = users.find(user => user.name === body.name)
 
-  if (foundPerson) {
-    return response.status(400).json({
-      error: 'That name already exists'
-    })
-  } else if (body.name.length < 3) {
-    return response.status(400).json({
-      error: 'Name must have at least 3 letters.'
-    })
-  } else if (body.number.length < 8) {
-    return response.status(400).json({
-      error: 'Number must be at least 8 digits.'
-    })
-  } else if (!body.name && !body.number) {
-    return response.status(400).json({
-      error: 'No name or number'
-    })
-  } else if (body.number === undefined || !body.number) {
-    return response.status(400).json({
-      error: 'No number'
-    })
-  } else if (body.name === undefined || !body.name) {
-    return response.status(400).json({
-      error: 'No name'
-    })
-  }
+  // if (foundPerson) {
+  //   return response.status(400).json({
+  //     error: 'That name already exists'
+  //   })
+  // } else if (body.name.length < 3) {
+  //   return response.status(400).json({
+  //     error: 'Name must have at least 3 letters.'
+  //   })
+  // } else if (body.number.length < 8) {
+  //   return response.status(400).json({
+  //     error: 'Number must be at least 8 digits.'
+  //   })
+  // } else if (!body.name && !body.number) {
+  //   return response.status(400).json({
+  //     error: 'No name or number'
+  //   })
+  // } else if (body.number === undefined || !body.number) {
+  //   return response.status(400).json({
+  //     error: 'No number'
+  //   })
+  // } else if (body.name === undefined || !body.name) {
+  //   return response.status(400).json({
+  //     error: 'No name'
+  //   })
+  // }
 
   users = users.concat(user)
   // response.json(person)
@@ -240,6 +214,7 @@ app.get('/api/persons', (request, response) => {
   // response.json(persons)
   User.find({}).then(user => {
     response.json(user)
+    // mongoose.connection.close()
   })
 })
 
@@ -273,6 +248,18 @@ const errorHandler = (error, request, response, next) => {
 app.use(errorHandler)
 
 const PORT = process.env.PORT
+// app.listen(PORT, "0.0.0.0")
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log('Server running on port 3001')
 })
+
+// const start = async () => {
+//   try {
+//     await app.listen(PORT, "0.0.0.0")
+//     app.console.log(`server listening on ${PORT}`)
+//   } catch (err) {
+//     app.console.log(err)
+//     // process.exit(1)
+//   }
+// }
+// start()

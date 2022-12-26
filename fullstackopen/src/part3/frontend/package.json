@@ -11,6 +11,7 @@
     "cors": "^2.8.5",
     "http-proxy-middleware": "^2.0.6",
     "mongoose": "^6.8.0",
+    "nodemon": "^2.0.20",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-scripts": "5.0.0",
@@ -18,7 +19,7 @@
   },
   "scripts": {
     "start": "set PORT=3000 && react-scripts start",
-    "dev": "concurrently \"cd src && node server.js\" \"set PORT=3000 && react-scripts start\"",
+    "dev": "concurrently \"cd src && node server2.js\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -48,5 +49,6 @@
   },
   "devDependencies": {
     "json-server": "^0.17.0"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }
