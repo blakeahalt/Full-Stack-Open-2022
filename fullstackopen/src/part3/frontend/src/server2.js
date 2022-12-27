@@ -8,7 +8,11 @@ const express = require('express')
 // mongoose.set('strictQuery', true)
 // mongoose.connect(url)
 const app = express()
-app.use(express.static('build'))
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../build')));
+
+// console.log((path.join(__dirname, '../build')))
+
 app.use(express.json())
 const User = require('./models/person')
 const cors = require('cors')
@@ -89,6 +93,20 @@ const generateId = () => {
   return getRandomInt()
 }
 
+// app.get('/', function (req, res) {
+//   res.sendFile(path.join(__dirname, '../build'));
+//   // res.sendFile('/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part3/frontend/build/index.html');
+// });
+
+
+app.get('/api/persons', (request, response) => {
+  // const id = Number(request.params.id)
+  // response.json(persons)
+  User.find({}).then(user => {
+    response.json(user)
+  })
+})
+
 // http://localhost:3001/api/persons
 // app.post('/api/persons', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
@@ -111,33 +129,33 @@ app.post('/api/persons', (request, response, next) => {
     res.json(users)
   })
 
-  // const foundPerson = users.find(user => user.name === body.name)
+  const foundPerson = users.find(user => user.name === body.name)
 
-  // if (foundPerson) {
-  //   return response.status(400).json({
-  //     error: 'That name already exists'
-  //   })
-  // } else if (body.name.length < 3) {
-  //   return response.status(400).json({
-  //     error: 'Name must have at least 3 letters.'
-  //   })
-  // } else if (body.number.length < 8) {
-  //   return response.status(400).json({
-  //     error: 'Number must be at least 8 digits.'
-  //   })
-  // } else if (!body.name && !body.number) {
-  //   return response.status(400).json({
-  //     error: 'No name or number'
-  //   })
-  // } else if (body.number === undefined || !body.number) {
-  //   return response.status(400).json({
-  //     error: 'No number'
-  //   })
-  // } else if (body.name === undefined || !body.name) {
-  //   return response.status(400).json({
-  //     error: 'No name'
-  //   })
-  // }
+  if (foundPerson) {
+    return response.status(400).json({
+      error: 'That name already exists'
+    })
+  } else if (body.name.length < 3) {
+    return response.status(400).json({
+      error: 'Name must have at least 3 letters.'
+    })
+  } else if (body.number.length < 8) {
+    return response.status(400).json({
+      error: 'Number must be at least 8 digits.'
+    })
+  } else if (!body.name && !body.number) {
+    return response.status(400).json({
+      error: 'No name or number'
+    })
+  } else if (body.number === undefined || !body.number) {
+    return response.status(400).json({
+      error: 'No number'
+    })
+  } else if (body.name === undefined || !body.name) {
+    return response.status(400).json({
+      error: 'No name'
+    })
+  }
 
   users = users.concat(user)
   // response.json(person)
@@ -209,14 +227,6 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get('/api/persons', (request, response) => {
-  // const id = Number(request.params.id)
-  // response.json(persons)
-  User.find({}).then(user => {
-    response.json(user)
-    // mongoose.connection.close()
-  })
-})
 
 app.get('/info', (request, response) => {
   const dateInfo = new Date()
@@ -247,7 +257,7 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8080 || 3001
 // app.listen(PORT, "0.0.0.0")
 app.listen(PORT, () => {
   console.log('Server running on port 3001')

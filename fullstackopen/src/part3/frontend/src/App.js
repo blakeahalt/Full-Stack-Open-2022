@@ -11,10 +11,7 @@ import './index.css'
 
 const App = () => {
 
-  const [persons, setPersons] = useState([
-    { 'name': 'Blake', 'number': '508-299-9373' },
-    { 'name': 'Joshua', 'number': '508-339-9392' }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [newNumber10, setNewNumber10] = useState('')
@@ -32,7 +29,7 @@ const App = () => {
 
   // useEffect(() => {
   //   axios
-  //     .get('http://localhost:3001/api/persons')
+  //     .get('/api/persons')
   //     .then(res => {
   //       setPersons(res.data)
   //     })
@@ -49,6 +46,7 @@ const App = () => {
     ? persons
     : persons.filter((person) =>
       person.name.toLowerCase().includes(newFilter.toLowerCase()))
+      
 
   const addName = (event) => {
     event.preventDefault()
@@ -56,6 +54,32 @@ const App = () => {
     const newPerson = {
       name: newName,
       number: newNumber || newNumber9 || newNumber10
+    }
+
+    if (newName.length < 3) {
+      setMessage({
+        message:'Name must have at least 3 letters.',
+        type: 'error' })
+    } else if (newNumber.length < 8) {
+      setMessage({
+        message:'Number must be at least 8 digits.',
+        type: 'error' })
+    } else if (newNumber.length > 10) {
+      setMessage({
+        message:'Number is too long.',
+        type: 'error' })
+    } else if (!newPerson.name && !newPerson.number) {
+      setMessage({
+        message:'No name or number',
+        type: 'error' })
+    } else if (newNumber === undefined || !newNumber) {
+      setMessage({
+        message:'No number',
+          type: 'error' })
+    } else if (newName === undefined || !newName) {
+      setMessage({
+        message:'No name',
+          type: 'error' })
     }
 
     const isFound = (persons.find(person => person.name.toLowerCase() === newPerson.name.toLowerCase()))
@@ -149,6 +173,7 @@ const App = () => {
       setNewNumber(event.target.value)
     }
   }
+  
 
   const handleFilter = (event) => {
     setNewFilter(event.target.value)
