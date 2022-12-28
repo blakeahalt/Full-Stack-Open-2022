@@ -1,7 +1,6 @@
 {
   "name": "part3backend",
   "version": "1.0.0",
-  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
@@ -18,10 +17,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
+    "eslint": "^8.19.0",
     "experss": "^0.0.1-security",
     "express": "^4.18.1",
     "heroku": "^7.60.2",
     "morgan": "^1.10.0",
+    "nodemon": "^2.0.19",
+    "path": "^0.12.7",
     "pg": "^8.7.3"
   },
   "devDependencies": {

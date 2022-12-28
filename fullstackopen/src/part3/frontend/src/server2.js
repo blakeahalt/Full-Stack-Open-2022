@@ -10,45 +10,12 @@ const express = require('express')
 const app = express()
 const path = require('path');
 app.use(express.static(path.join(__dirname, '../build')));
-
 // console.log((path.join(__dirname, '../build')))
 
 app.use(express.json())
 const User = require('./models/person')
 const cors = require('cors')
 app.use(cors())
-
-let users = [
-  {
-    'name': 'Barbara',
-    'number': '508-757-4523',
-    'id': '79'
-  },
-  {
-    'name': 'William',
-    'number': '508-894-5974',
-    'id': '45'
-  },
-  {
-    'name': 'Cyrus',
-    'number': '415-422-5332',
-    'id': '78'
-  },
-  {
-    'name': 'Katie',
-    'number': '508-890-5320',
-    'id': '12'
-  },
-  {
-    'name': 'Tim',
-    'number': '508-299-9373',
-    'id': '86'
-  }
-]
-
-
-// // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
-// const url = `mongodb+srv://blakeahalt:${password}@cluster0.nrpgtan.mongodb.net/Person?retryWrites=true&w=majority`
 
 // const mongoose = require('mongoose')
 // // import mongoose from 'mongoose';
@@ -98,21 +65,19 @@ const generateId = () => {
 //   // res.sendFile('/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part3/frontend/build/index.html');
 // });
 
-
 app.get('/api/persons', (request, response) => {
-  // const id = Number(request.params.id)
-  // response.json(persons)
   User.find({}).then(user => {
     response.json(user)
   })
 })
 
-// http://localhost:3001/api/persons
-// app.post('/api/persons', (request, response, next) => {
 app.post('/api/persons', (request, response, next) => {
   const body = request.body
 
-  if (body.name === undefined) {
+  if (body.name === undefined && body.number === undefined) {
+    return response.status(400).json({ error: 'name and number missing' })
+  }
+  else if (body.name === undefined) {
     return response.status(400).json({ error: 'name missing' })
   }
   else if (body.number === undefined) {
@@ -125,39 +90,39 @@ app.post('/api/persons', (request, response, next) => {
     number: body.number,
   })
 
-  app.get('/api/persons', (req, res) => {
-    res.json(users)
-  })
+  // app.get('/api/persons', (req, res) => {
+  //   res.json(users)
+  // })
 
-  const foundPerson = users.find(user => user.name === body.name)
+  // const foundPerson = users.find(user => user.name === body.name)
 
-  if (foundPerson) {
-    return response.status(400).json({
-      error: 'That name already exists'
-    })
-  } else if (body.name.length < 3) {
-    return response.status(400).json({
-      error: 'Name must have at least 3 letters.'
-    })
-  } else if (body.number.length < 8) {
-    return response.status(400).json({
-      error: 'Number must be at least 8 digits.'
-    })
-  } else if (!body.name && !body.number) {
-    return response.status(400).json({
-      error: 'No name or number'
-    })
-  } else if (body.number === undefined || !body.number) {
-    return response.status(400).json({
-      error: 'No number'
-    })
-  } else if (body.name === undefined || !body.name) {
-    return response.status(400).json({
-      error: 'No name'
-    })
-  }
+  // if (foundPerson) {
+  //   return response.status(400).json({
+  //     error: 'That name already exists'
+  //   })
+  // } else if (body.name.length < 3) {
+  //   return response.status(400).json({
+  //     error: 'Name must have at least 3 letters.'
+  //   })
+  // } else if (body.number.length < 8) {
+  //   return response.status(400).json({
+  //     error: 'Number must be at least 8 digits.'
+  //   })
+  // } else if (!body.name && !body.number) {
+  //   return response.status(400).json({
+  //     error: 'No name or number'
+  //   })
+  // } else if (body.number === undefined || !body.number) {
+  //   return response.status(400).json({
+  //     error: 'No number'
+  //   })
+  // } else if (body.name === undefined || !body.name) {
+  //   return response.status(400).json({
+  //     error: 'No name'
+  //   })
+  // }
 
-  users = users.concat(user)
+  // users = users.concat(user)
   // response.json(person)
 
   user.save().then(users => {
@@ -168,13 +133,6 @@ app.post('/api/persons', (request, response, next) => {
 
 app.put('/api/persons/:id', (request, response, next) => {
   const { name, number } = request.body
-  // const {name, number} = request.body
-
-  // const user = {
-  //   id: generateId(),
-  //   name: body.name,
-  //   number: body.number,
-  // }
 
   User.findByIdAndUpdate(
     request.params.id,
@@ -262,14 +220,3 @@ const PORT = process.env.PORT || 8080 || 3001
 app.listen(PORT, () => {
   console.log('Server running on port 3001')
 })
-
-// const start = async () => {
-//   try {
-//     await app.listen(PORT, "0.0.0.0")
-//     app.console.log(`server listening on ${PORT}`)
-//   } catch (err) {
-//     app.console.log(err)
-//     // process.exit(1)
-//   }
-// }
-// start()

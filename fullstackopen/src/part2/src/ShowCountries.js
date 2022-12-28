@@ -1,27 +1,31 @@
 import React from 'react'
 import Weather from './Weather.js'
+import './country.css'
 
 const ShowCountries = ({ filteredCountry, setNewFilter }) => {
 	if (filteredCountry.length === 1) {
 		const country = filteredCountry[0]
 		const pop = country.population;
 		const formattedPop = pop.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-		console.log('country', country)
+		// console.log('country', country)
 		return (
 		<>
 			<div>
-				<h1>{country.name.official}</h1>
-					<div><strong>Commonly Known As: </strong>{country.name.common}</div>
-					<div><strong>Capital: </strong>{Object.values(country.capital).join(', ')}</div>
-					<div><strong>Population: </strong>{formattedPop}</div>
-					<div><strong>Languages: </strong>
-					{Object.values(country.languages).join(', ')}</div>
+				<h1 className="container">{country.name.official}</h1>
+				<img src={country.flags.svg} alt={country.name.official} width='200px' border='1px'/>	
+				<div style={{ textAlign: 'center' }}>
+    				<div style={{display: 'inline-block', textAlign: 'left'}}>
+						<li className="item"><strong>Commonly Known As: </strong>{country.name.common}</li>
+						<li className="item"><strong>Capital: </strong>{Object.values(country.capital).join(', ')}</li>
+						<li className="item"><strong>Population: </strong>{formattedPop}</li>
+						<li className="item"><strong>Languages: </strong>
+						{Object.values(country.languages).join(', ')}</li>
+					</div>
+				</div>
 					{/* <div><strong>Languages:</strong>{country.languages[1] ? 
 						Object.values(country.languages).join(', ') : 
 						country.languages
 					}</div> */}
-				<br></br>
-				<img src={country.flags.svg} alt={country.name.official} width='200px' border='1px'/>			
 			</div>
 		  <Weather country={country} />
 		  </>

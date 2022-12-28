@@ -6,7 +6,6 @@ import AddPerson from './components/AddPerson.js'
 import PhoneBook from './components/PhoneBook.js'
 import Notification from './components/Notification.js'
 import './index.css'
-// import axios from 'axios'
 
 
 const App = () => {
@@ -27,20 +26,11 @@ const App = () => {
       })
   }, [])
 
-  // useEffect(() => {
-  //   axios
-  //     .get('/api/persons')
-  //     .then(res => {
-  //       setPersons(res.data)
-  //     })
-  //   }, [])
-
   const resetNotification = () => {
     setTimeout(() => {
       setMessage({})
     }, 3000)
   }
-
 
   const filteredPerson = !newFilter
     ? persons
@@ -56,30 +46,48 @@ const App = () => {
       number: newNumber || newNumber9 || newNumber10
     }
 
-    if (newName.length < 3) {
-      setMessage({
-        message:'Name must have at least 3 letters.',
-        type: 'error' })
-    } else if (newNumber.length < 8) {
-      setMessage({
-        message:'Number must be at least 8 digits.',
-        type: 'error' })
-    } else if (newNumber.length > 10) {
-      setMessage({
-        message:'Number is too long.',
-        type: 'error' })
-    } else if (!newPerson.name && !newPerson.number) {
+    if (!newName && !newNumber) {
       setMessage({
         message:'No name or number',
         type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
+      } else if (newName && newName.length < 3) {
+      setMessage({
+        message:'Name must have at least 3 letters.',
+        type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
+    } else if (newNumber && newNumber.length < 8) {
+      setMessage({
+        message:'Number must be at least 8 digits.',
+        type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
+    } else if (newNumber.length > 12) {
+      setMessage({
+        message:'Number is too long.',
+        type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
     } else if (newNumber === undefined || !newNumber) {
       setMessage({
         message:'No number',
           type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
     } else if (newName === undefined || !newName) {
       setMessage({
         message:'No name',
           type: 'error' })
+      resetNotification()
+      setNewName('')
+      setNewNumber('')
     }
 
     const isFound = (persons.find(person => person.name.toLowerCase() === newPerson.name.toLowerCase()))
@@ -162,11 +170,6 @@ const App = () => {
       const formattedValue = value.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3')
       setNewNumber(formattedValue)
       setNewNumber10(formattedValue)
-    // } else if (value.length === 9) {
-    // // 11-1111111 format
-    // const formattedValue = value.replace(/(\d{2})(\d{7})/, '$1-$2');
-    // setNewNumber(formattedValue);
-    // setNewNumber9(formattedValue);
     } else {
       setNewNumber10('')
       setNewNumber9('')
@@ -178,7 +181,6 @@ const App = () => {
   const handleFilter = (event) => {
     setNewFilter(event.target.value)
   }
-
 
   return (
     <>

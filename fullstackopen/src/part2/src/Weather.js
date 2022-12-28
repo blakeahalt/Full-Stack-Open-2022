@@ -2,13 +2,13 @@ import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 // import dotenv from 'dotenv'
 // dotenv.config()
-// const access_key = process.env.REACT_APP_API_KEY
 
 const Weather = ( country ) => {
   
   const [ weather, setWeather] = useState({})
+  // const apiKey = process.env.REACT_APP_API_KEY
   const apiKey = '7103d3e9355c15bc232acd9442b53344'
-  console.log(country)
+  // console.log(country)
 
   useEffect(() => {
     async function fetchData() {
@@ -33,31 +33,35 @@ const Weather = ( country ) => {
 //     });
 // }, []);
 
-    console.log('weatherData', weather)
+    // console.log('weatherData', weather)
       
       return (
         <>
           {/* {weather ? ( */}
             <div>
-              <h2>Weather in {country.country.capital ? country.country.capital[0] : country.country.capital}</h2>
-              <div>Current forecast: {weather.list ? weather.list[0].weather[0].description : null}</div>
-              <div>Temperature: {weather.list ? weather.list[0].main.temp : null}°F</div>
+              <h1 className='container'>Weather in {country.country.capital ? country.country.capital[0] : country.country.capital}</h1>
+              <div style={{ textAlign: 'center' }}>
+    				    <div style={{display: 'inline-block', textAlign: 'left'}}>
+              <div><strong>Today: </strong> {weather.list ? weather.list[0].weather[0].description : null} | {weather.list ? weather.list[0].main.temp : null}°F</div>
               <img
                 alt="weather icon"
                 src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[0].weather[0].icon : null}@2x.png`}
+                style={{backgroundColor: '#aeaeae', width: 125}}
                 />
-              <div>Tomorrow's forecast: {weather.list ? weather.list[8].weather[0].description : null}</div>
-              <div>Temperature: {weather.list ? weather.list[8].main.temp : null}°F</div>
+              <div><strong>Tomorrow: </strong>{weather.list ? weather.list[8].weather[0].description : null} | {weather.list ? weather.list[8].main.temp : null}°F </div>
               <img
                 alt="weather icon"
                 src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[8].weather[0].icon : null}@2x.png`}
+                style={{backgroundColor: '#aeaeae', width: 125}}
                 />
-              <div>Day after tomorrow's forecast: {weather.list ? weather.list[16].weather[0].description : null}</div>
-              <div>Temperature: {weather.list ? weather.list[16].main.temp : null}°F</div>
+              <div><strong>Next day: </strong>{weather.list ? weather.list[16].weather[0].description : null} | {weather.list ? weather.list[16].main.temp : null}°F</div>
               <img
                 alt="weather icon"
                 src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[16].weather[0].icon : null}@2x.png`}
+                style={{backgroundColor: '#aeaeae', width: 125}}
                 />
+                </div>
+                </div>
               {/* {Object.keys(weather.weather).map((entries) => <div key={weather.weather[entries]}> Currently: {(weather.weather[entries].description)}</div>)} */}
               {/* <div>Wind {weather.wind.speed} m/s</div> */}
             </div>

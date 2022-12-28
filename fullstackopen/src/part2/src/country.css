@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    color: #333333;
+  }
+  
+  strong {
+    font-weight: bold;
+    color: #333333;
+  }
+  
+  div {
+    margin: 1em 0;
+  }
+  
+  img {
+    display: block;
+    margin: 0 auto;
+  }
+  
+  button {
+    font-size: 1em;
+    padding: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    background-color: #ffffff;
+    cursor: pointer;
+    margin-left: 1em;
+  }
+  
+  button:hover {
+    background-color: #dddddd;
+  }
+  
+  /* Make the element with the class "container" a flex container */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Make all direct children of the element with the class "container" flex items */
+  .container > * {
+    flex: 1 1 auto;
+    margin: 0.5em;
+  }
+  
+  /* Make the element with the class "item" a flex item */
+  .item {
+    flex: 1 1 auto;
+    margin: 0.5em;
+  }
+  
+  /* Style the list items */
+  li {
+    list-style-type: none;
+    margin: 0.5em 0;
+    text-align: left;
+    max-width: 325px;
+  }
+  
+  /* Style the columns */
+  .column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  @media only screen and (max-width: 600px) {
+    /* On small screens, make the flex items stack vertically */
+    .container {
+      flex-direction: column;
+    }
+  }
+  

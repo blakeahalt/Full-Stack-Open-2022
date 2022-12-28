@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// import mongoose from 'mongoose';
 mongoose.set('strictQuery', true)
 const url = process.env.MONGODB_URI
 

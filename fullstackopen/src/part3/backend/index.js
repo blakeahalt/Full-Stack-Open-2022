@@ -1,15 +1,27 @@
-require('dotenv').config({ path: './.env' })
-// require('dotenv').config()
+// require('dotenv').config({ path: './.env' })
+require('dotenv').config()
 const express = require('express')
 const app = express()
-app.use(express.static('build'))
+// const mongoose = require('mongoose')
+// mongoose.set('strictQuery', true)
+
+// app.use(express.static('build'))
+
+// const fs = require('fs');
+// const path = require('path');
+// const indexPath = path.join(__dirname, 'index.js');
+//   console.log(fs.realpathSync(indexPath));
+
+const path = require('path');
+app.use(express.static(path.join(__dirname, 'build')));
+
 app.use(express.json())
-// const User = require('./models/person')
+const User = require('./models/person')
 const cors = require('cors')
 app.use(cors())
 // const morgan = require('morgan')
 
-// const { user } = require('pg/lib/defaults')
+// // const { user } = require('pg/lib/defaults')
 
 // const requestLogger = (request, response, next) => {
 // 	console.log('Method:', request.method)
@@ -59,26 +71,27 @@ let users = [
 // // DO NOT SAVE YOUR PASSWORD TO GITHUB!!
 // const url = `mongodb+srv://blakeahalt:${password}@cluster0.nrpgtan.mongodb.net/Person?retryWrites=true&w=majority`
 
-const mongoose = require('mongoose')
-// // import mongoose from 'mongoose';
-mongoose.set('strictQuery', true)
-const url = process.env.MONGODB_URI
+// const mongoose = require('mongoose')
+// // // import mongoose from 'mongoose';
+// mongoose.set('strictQuery', true)
+// const url = process.env.MONGODB_URI
 
-console.log('connecting...')
+// console.log('connecting...')
 
-mongoose.connect(url)
-  .then(result => {
-    console.log('connected to MongoDB')
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
+// mongoose.connect(url)
+//   .then(result => {
+//     console.log('connected to MongoDB')
 
-const userSchema = new mongoose.Schema({
-  _id: String,
-  name: String,
-  number: String,
-})
+//   })
+//   .catch((error) => {
+//     console.log('error connecting to MongoDB:', error.message)
+//   })
+
+// const userSchema = new mongoose.Schema({
+//   _id: String,
+//   name: String,
+//   number: String,
+// })
 
 // // const userSchema = new mongoose.Schema({
 // //   _id: {
@@ -103,16 +116,16 @@ const userSchema = new mongoose.Schema({
 // //   }
 // // })
 
-userSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete (returnedObject._id)
-    delete (returnedObject.__v)
-  }
-})
+// userSchema.set('toJSON', {
+//   transform: (document, returnedObject) => {
+//     returnedObject.id = returnedObject._id.toString()
+//     delete (returnedObject._id)
+//     delete (returnedObject.__v)
+//   }
+// })
 
 
-const User = mongoose.model('User', userSchema)
+// const User = mongoose.model('User', userSchema)
 
 
 
@@ -130,6 +143,21 @@ const generateId = () => {
 //   // eslint-disable-next-line
 //   res.send(build / index.html)
 // })
+// app.get('/', function (req, res) {
+//   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+//   // res.sendFile('/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part3/frontend/build/index.html');
+// });
+
+
+
+
+app.get('/api/persons', (request, response) => {
+  // const id = Number(request.params.id)
+  // response.json(persons)
+  User.find({}).then(user => {
+    response.json(user)
+  })
+})
 
 // http://localhost:3001/api/persons
 // app.post('/api/persons', (request, response, next) => {
@@ -249,14 +277,6 @@ app.get('/api/persons/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
-app.get('/api/persons', (request, response) => {
-  // const id = Number(request.params.id)
-  // response.json(persons)
-  User.find({}).then(user => {
-    response.json(user)
-  })
-})
-
 app.get('/info', (request, response) => {
   const dateInfo = new Date()
   User.find({}).then(users => {
@@ -289,9 +309,9 @@ app.use(errorHandler)
 // const PORT = process.env.PORT
 // app.listen(PORT, "0.0.0.0")
 
-const PORT = process.env.PORT || 3001
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+// const PORT = process.env.PORT || 3001 || 8080
+app.listen(3001 || "0.0.0.0", () => {
+  console.log(`Server running on port`)
 })
 
 // app.listen(PORT, "0.0.0.0", () => {

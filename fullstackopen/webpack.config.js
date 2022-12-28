@@ -8,7 +8,7 @@ const isProduction = process.env.NODE_ENV === "production";
 const config = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "build"),
   },
   devServer: {
     open: true,
@@ -58,10 +58,16 @@ module.exports = function override(config, env) {
   };
   config.plugins.push(
       new webpack.ProvidePlugin({
-          process: 'process/browser',
+          process: 'process',
           Buffer: ['buffer', 'Buffer'],
       })
   );
+  
+  config.resolve = {
+    fallback: {
+      "http": require.resolve("stream-http")
+    }
+  };
 
   return config;
 };
