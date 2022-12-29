@@ -24,6 +24,9 @@ const App = () => {
     else if (newFilter.toLowerCase() === 'guinea') {
       return country.name.common.toLowerCase() === 'guinea';
     }
+    else if (newFilter.toLowerCase() === 'united states') {
+      return country.name.common.toLowerCase() === 'united states';
+    }
     else {
       return country.name.common.toLowerCase().includes(newFilter.toLowerCase());
     }
