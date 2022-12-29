@@ -24,11 +24,11 @@ const Weather = ({ filteredCountry, weatherCountry }) => {
     //   // setCountry(filteredCountry[0])
     //   return country = filteredCountry[0]
     // }
-console.log('country', country)
-console.log('filteredCountry[0]', filteredCountry[0])
+// console.log('country', country)
+// console.log('filteredCountry[0]', filteredCountry[0])
 
     useEffect(() => {
-      console.log('weatherAPI')
+      // console.log('weatherAPI')
       async function fetchData() {
         try {
           const apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${country.capital}&units=imperial&&appid=${apiKey}`;
@@ -41,11 +41,11 @@ console.log('filteredCountry[0]', filteredCountry[0])
       }
       fetchData();
     }, []);
-    console.log('weather', weather)
+    // console.log('weather', weather)
 return (
 <>
     <div>
-      <h1 className='container' style={{textAlign: 'center'}}>Weather in {country?.capital ? country?.capital[0] : country?.capital}</h1>
+      <h1 className='container' style={{textAlign: 'center', marginBottom: -5}}>Weather in {country?.capital ? country?.capital[0] : country?.capital}</h1>
 
       {/* <div style={{ display: 'flex', flexDirection: 'column'}}>	 */}
           {/* <div style={{ textAlign: 'center' }}> */}
@@ -55,9 +55,12 @@ return (
                 <img
                   alt="weather icon"
                   src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[0].weather[0].icon : null}@2x.png`}
-                  style={{ width: 185 }} />
+                  style={{ width: 125 }} />
                   <div>
-                    {weather.list ? weather.list[0].weather[0].description : null} | {weather.list ? weather.list[0].main.temp : null}°F 
+                    {weather.list ? weather.list[0].weather[0].description : null} 
+                  </div>
+                  <div>
+                    {weather.list ? weather.list[0].main.temp : null}°F 
                   </div>
           </div>
           <div style={{ margin: 15, padding: 10, backgroundColor: '#e5e5e5'}}>
@@ -65,9 +68,12 @@ return (
                 <img
                   alt="weather icon"
                   src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[8].weather[0].icon : null}@2x.png`}
-                  style={{ width: 185 }} />
+                  style={{ width: 125 }} />
                   <div>
-                    {weather.list ? weather.list[8].weather[0].description : null} | {weather.list ? weather.list[8].main.temp : null}°F 
+                    {weather.list ? weather.list[8].weather[0].description : null}
+                  </div>
+                  <div>
+                    {weather.list ? weather.list[8].main.temp : null}°F 
                   </div>
           </div>
           <div style={{ margin: 15, padding: 10, backgroundColor: '#e5e5e5'}}>
@@ -75,9 +81,12 @@ return (
                 <img
                   alt="weather icon"
                   src={`http://openweathermap.org/img/wn/${weather.list ? weather.list[16].weather[0].icon : null}@2x.png`}
-                  style={{ width: 185 }} />
+                  style={{ width: 125 }} />
                   <div>
-                    {weather.list ? weather.list[16].weather[0].description : null} | {weather.list ? weather.list[16].main.temp : null}°F
+                    {weather.list ? weather.list[16].weather[0].description : null}
+                  </div>
+                  <div>
+                    {weather.list ? weather.list[16].main.temp : null}°F
                   </div>
           </div>
         </div>

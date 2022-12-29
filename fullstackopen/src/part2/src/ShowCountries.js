@@ -13,7 +13,7 @@ const ShowCountries = ({ filteredCountry, newFilter, setNewFilter }) => {
 		return (
 		<>
 			<div>
-				<h1 className="container" style={{maxWidth: 625, textAlign: 'center'}}>{country.name.official}</h1>
+				<h1 className="container" style={{maxWidth: 625, marginBottom: -10, marginTop: -10, textAlign: 'center'}}>{country.name.official}</h1>
 				
 					<div style={{ display: 'flex', flexDirection: 'column'}}>	
 					{country.coatOfArms.svg ? (
@@ -51,7 +51,7 @@ const ShowCountries = ({ filteredCountry, newFilter, setNewFilter }) => {
 					)}
 					</div>
 
-				<div style={{ textAlign: 'center' }}>
+				<div style={{ textAlign: 'center', marginBottom: -20, marginTop: -15 }}>
     				<div style={{display: 'inline-block', textAlign: 'left'}}>
 						<li className="item"><strong>Commonly Known As: </strong>{country.name.common}</li>
 						<li className="item"><strong>Capital: </strong>{Object.values(country.capital).join(', ')}</li>
