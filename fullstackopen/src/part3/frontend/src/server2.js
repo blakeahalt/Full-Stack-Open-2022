@@ -215,8 +215,8 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-const PORT = process.env.PORT || 8080 || 3001
+// const PORT = process.env.PORT || 8080 || 3001
 // app.listen(PORT, "0.0.0.0")
-app.listen(PORT, () => {
-  console.log('Server running on port 3001')
+app.listen(8080, () => {
+  console.log('Server running on port')
 })

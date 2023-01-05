@@ -95,17 +95,18 @@ const App = () => {
     if (isFound){
       let res = window.confirm(`${newName} already exists. To update a new number, click to confirm.`)
       if (res) {
-        noteService
-          .update(isFound.id, newPerson)
-          .then(updatedPerson => {
-            setPersons(persons.map(person => person.id ? person : updatedPerson))
-            setMessage(
-              { message:`Successfully updated ${newName}'s number!`,
-                type: 'success' })
-          })
-        resetNotification()
-        setNewNumber10('') || setNewNumber9('') || setNewNumber('')
-        setNewName('')
+        updateNumber(isFound.id, newPerson)
+        // noteService
+        //   .update(isFound.id, newPerson)
+        //   .then(updatedPerson => {
+        //     setPersons(persons.map(person => person.id ? person : updatedPerson))
+        //     setMessage(
+        //       { message:`Successfully updated ${newName}'s number!`,
+        //         type: 'success' })
+        //   })
+        // resetNotification()
+        // setNewNumber10('') || setNewNumber9('') || setNewNumber('')
+        // setNewName('')
       } else {
         setPersons(persons)
       }
@@ -127,21 +128,44 @@ const App = () => {
     }
   }
 
-  const updateNumber = (id, newObject) => {
+  // const updateNumber = (id, newObject) => {
+  //   noteService
+  //     .update(id, newObject)
+  //     .then(updatedPerson => {
+  //       setPersons(persons.map(person => person.id ? person : updatedPerson))
+  //       setMessage(
+  //             { message:`Successfully updated ${newName}'s number!`,
+  //               type: 'success' })
+  //         })
+  //       resetNotification()
+  //       setNewNumber10('') || setNewNumber9('') || setNewNumber('')
+  //       setNewName('')
+  //       //   setNewNumber('')
+  //     //   setNewName('')
+  //     // })
+  // }
+
+  const updateNumber = (id, newPerson) => {
     noteService
-      .update(id, newObject)
+      .update(id, newPerson)
       .then(updatedPerson => {
-        setPersons(persons.map(person => person.id ? person : updatedPerson))
-        setNewNumber('')
-        setNewName('')
+        // Update the persons state with the updated person object
+        setPersons(persons.map(person => person.id !== id ? person : updatedPerson))
+        setMessage(
+          { message:`Successfully updated ${newName}'s number!`,
+            type: 'success' })
       })
+    resetNotification()
+    setNewNumber10('') || setNewNumber9('') || setNewNumber('')
+    setNewName('')
   }
 
   const removePerson = id => {
     noteService
       .remove(id)
       .then(removedPerson => {
-        setPersons(persons)
+        setPersons(persons.filter(person => person.id !== id))
+        // setPersons(persons)
         setMessage(
           { message:'Successfully REMOVED!',
             type: 'success' })
@@ -151,7 +175,7 @@ const App = () => {
       })
       .catch(event => {
         setMessage(
-          { message:'the person was already deleted from server',
+          { message:`${newName} has already deleted from server`,
             type: 'error' })
         resetNotification()
         setNewNumber('')
