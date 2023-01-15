@@ -2,11 +2,11 @@ GET http://localhost:3001/api/blogs
 Content-Type: application/json
 
 ###
-POST http://localhost:3003/api/blogs/ HTTP/1.1
+POST http://localhost:3001/api/blogs/ HTTP/1.1
 Content-Type: application/json
 
 {
-       "title": "test_rest4",
+       "title": "test test2",
        "author": "test",
        "url": "test",
        "likes": "1"
@@ -17,7 +17,7 @@ PUT http://localhost:3001/api/blogs/ HTTP/1.1
 Content-Type: application/json
 
 {
-       "title": "test_put_rest",
+       "title": "test_put",
        "author": "test",
        "url": "test",
        "likes": "1"

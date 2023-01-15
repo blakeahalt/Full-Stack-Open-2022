@@ -11,7 +11,8 @@ const password = process.argv[2]
 // const mongoUrl = 'mongodb://localhost/bloglist'
 // mongoose.connect(mongoUrl)
 
-const url = `mongodb+srv://fullstack:${password}@cluster0.nrpgtan.mongodb.net/Blog?retryWrites=true&w=majority`
+// const url = `mongodb+srv://fullstack:${password}@cluster0.nrpgtan.mongodb.net/Blog?retryWrites=true&w=majority`
+const url = `mongodb+srv://fullstack:${password}@cluster0.nrpgtan.mongodb.net/Part4?retryWrites=true&w=majority`
 
 mongoose.connect(url)
 
@@ -31,7 +32,6 @@ const blog = new Blog({
   likes: 999,
 })
 
-// eslint-disable-next-line no-constant-condition
 if ( false ) {
   blog.save().then(() => {
     console.log('blog saved!')

@@ -10,6 +10,6 @@ describe('average', () => {
   })
 
   test('of empty array is zero', () => {
-    expect(average([null])).toBe(0)
+    expect(average([])).toBe(0)
   })
 })
