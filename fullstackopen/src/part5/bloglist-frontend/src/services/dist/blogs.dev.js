@@ -65,10 +65,49 @@ var create = function create(newObject) {
   });
 };
 
+var update = function update(id, newObject) {
+  var url = "".concat(baseUrl, "/").concat(id);
+
+  var request = _axios["default"].put(url, newObject);
+
+  return request.then(function (response) {
+    return response.data;
+  });
+};
+
+var remove = function remove(blogId) {
+  var config, response;
+  return regeneratorRuntime.async(function remove$(_context3) {
+    while (1) {
+      switch (_context3.prev = _context3.next) {
+        case 0:
+          config = {
+            headers: {
+              Authorization: token
+            }
+          };
+          _context3.next = 3;
+          return regeneratorRuntime.awrap(_axios["default"]["delete"]("".concat(baseUrl, "/").concat(blogId), config));
+
+        case 3:
+          response = _context3.sent;
+          console.log(response);
+          return _context3.abrupt("return", response.data);
+
+        case 6:
+        case "end":
+          return _context3.stop();
+      }
+    }
+  });
+};
+
 var blogService = {
   getAll: getAll,
   setToken: setToken,
-  create: create
+  create: create,
+  update: update,
+  remove: remove
 };
 var _default = blogService;
 exports["default"] = _default;

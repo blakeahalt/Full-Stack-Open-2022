@@ -26,8 +26,7 @@ var mongoose = require('mongoose');
 
 var _require = require('./utils/middleware'),
     unknownEndpoint = _require.unknownEndpoint,
-    errorHandler = _require.errorHandler,
-    tokenExtractor = _require.tokenExtractor;
+    errorHandler = _require.errorHandler;
 
 logger.info('connecting to', config.MONGODB_URI);
 mongoose.connect(config.MONGODB_URI).then(function () {

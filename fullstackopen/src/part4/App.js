@@ -10,7 +10,7 @@ const loginRouter = require('./controllers/login')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 const mongoose = require('mongoose')
-const { unknownEndpoint, errorHandler, tokenExtractor } = require('./utils/middleware')
+const { unknownEndpoint, errorHandler } = require('./utils/middleware')
 
 logger.info('connecting to', config.MONGODB_URI)
 
