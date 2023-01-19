@@ -11,28 +11,42 @@ const App = () => {
   const [newUrl, setNewUrl] = useState('')
   const [newTitle, setNewTitle] = useState('')
   const [newAuthor, setNewAuthor] = useState('')
-  const [likes, setLikes] = useState('')
-  const [newBlog, setNewBlog] = useState('')
-  const [showAll, setShowAll] = useState(true)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
+  const [notification, setNotification] = useState({
+    message:null,
+    successful:null
+  })
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs( blogs )
+      setBlogs(blogs)
     )  
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
       blogService.setToken(user.token)
+      setUser(user)
     }
   }, [])
+
+  const showNotification =(messageContent,successfulMode) => {
+    setNotification({
+      message: messageContent,
+      successful: successfulMode
+    })
+    setTimeout(() => {
+      setNotification({
+        message:null,
+        successful:null
+      })
+    },5000)
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -42,7 +56,7 @@ const App = () => {
       })
 
       window.localStorage.setItem(
-        'loggedNoteappUser', JSON.stringify(user)
+        'loggedBlogUser', JSON.stringify(user)
       ) 
       blogService.setToken(user.token)
       setUser(user)
@@ -51,46 +65,35 @@ const App = () => {
       console.log('logging in with', username, password)
     } catch (exception) {
       setErrorMessage('Wrong credentials')
+      // setNotification('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     }
   }
   
-  const handleLogOut = async (event) => {
+  const addBlog = async (event) => {
     event.preventDefault()
-    // try {
-      window.localStorage.removeItem('loggedNoteappUser')
-      window.localStorage.clear()
-
-    //   setUsername('')
-    //   setPassword('')
-    //   console.log('logged out')
-    // } catch (exception) {
-    //   setErrorMessage('Logout experienced an error')
-    //   setTimeout(() => {
-    //     setErrorMessage(null)
-    //   }, 3000)
-    // }
-  }
-
-
-  const addBlog = (event) => {
-    event.preventDefault()
-    const blogObject = {
-      url: newUrl,
+    const blogToAdd = {
       title: newTitle,
       author: newAuthor,
+      url: newUrl,
     }
-
-    // blogService.setToken(user.token)
-    blogService.create(blogObject, user)
+      
+    blogService
+      .create(blogToAdd)
       .then(returnedBlog => {
-        setBlogs(blogs.concat(returnedBlog))
-        setNewUrl('')
+        setBlogs([...blogs, returnedBlog])
         setNewTitle('')
         setNewAuthor('')
+        setNewUrl('')
       })
+  }
+  
+  const handleLogOut =(e) => {
+    e.preventDefault()
+    window.localStorage.clear()
+    setUser(null)
   }
 
   const handleUrlChange = (event) => {
@@ -131,7 +134,7 @@ const App = () => {
   const blogForm = () => (
     <form onSubmit={addBlog}>
       <div>
-        Url: <input
+        Url:<input
           value={newUrl}
           onChange={handleUrlChange}
         />
@@ -157,6 +160,9 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+
+      {notification.message!==null && notification.successful!==null &&
+        <Notification message={notification.message} successful={notification.successful}/>}
       <Notification message={errorMessage} />
 
       {user === null ?
@@ -169,9 +175,13 @@ const App = () => {
       </div>
     }
     <br/>
-      {blogs.map(blog =>
+      {Object.keys(blogs).map(blogKey => {
+        return(
+          <Blog key={blogKey} blog={blogs[blogKey]} />)
+        })}
+      {/* {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
-      )}
+      )} */}
     </div>
   )
 }

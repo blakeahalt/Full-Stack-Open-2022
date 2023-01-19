@@ -17,8 +17,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "dev": "concurrently \"cd .. && cd part4 && node index.js\" \"npm start\"",
+    "start": "cross-env react-scripts start",
+    "dev": "concurrently \"cd .. && cd part4 && cross-env node index.js\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
