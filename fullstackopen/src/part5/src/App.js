@@ -12,16 +12,14 @@ import loginService from './services/login'
 
 const App = () => {
   const [notes, setNotes] = useState([])
-  // const [newNote, setNewNote] = useState('')
   const [showAll, setShowAll] = useState(true)
-  const [loginVisible, setLoginVisible] = useState(false)
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
+  const [label, setLabel] = useState('')
 
   const noteFormRef = useRef()
-
 
   useEffect(() => {
     noteService
@@ -29,7 +27,7 @@ const App = () => {
       .then(initialNotes => {
         setNotes(initialNotes)
       })
-  }, [])
+  }, [label])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -39,6 +37,12 @@ const App = () => {
       noteService.setToken(user.token)
     }
   }, [])
+
+  const updateLabel = (label) => {
+    setTimeout(() => {
+        setLabel(label);
+    }, 0);
+}
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -121,7 +125,7 @@ const App = () => {
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
-        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
+        setNotes(notes.map(note => note._id === id ? returnedNote : note))
       })
       .catch(error => {
         setErrorMessage(
@@ -249,17 +253,11 @@ const App = () => {
           <Note
             key={note.id}
             note={note}
-            toggleImportance={() => toggleImportanceOf(note.id)}
+            toggleImportance={toggleImportanceOf}
+            updateLabel={updateLabel}
           />
         )}
       </ul>
-      {/* <Togglable buttonLabel="new note">
-        <NoteForm
-          onSubmit={addNote}
-          value={newNote}
-          handleChange={handleNoteChange}
-        />
-      </Togglable> */}
         {noteForm()}
 
       <Footer />

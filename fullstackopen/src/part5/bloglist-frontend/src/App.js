@@ -22,7 +22,6 @@ const App = () => {
   // const [toggleView, setToggleView] = useState(true)
   const [expandAll, setExpandAll] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
-  const [expandedViews, setExpandedViews] = useState(0)
 
 
   const blogFormRef = useRef()
@@ -77,7 +76,7 @@ const App = () => {
         .then(returnedBlog => {
           setBlogs([...blogs, returnedBlog])
         })
-        .then(() => {setSuccessMessage(`A new blog '${blogToAdd.title}' by ${blogToAdd.author} has been added!`)
+        .then(() => {setSuccessMessage(`A new blog '${blogToAdd.title}' by ${blogToAdd.author} has been added`)
             setTimeout(() => {
               setSuccessMessage(null)
             }, 5000)
@@ -93,7 +92,7 @@ const App = () => {
     blogService.getAll()
       .then(blogs => { setBlogs(blogs) })
       .then(() => {
-        setSuccessMessage(`You liked '${blog.title}'!`)
+        setSuccessMessage(`You liked '${blog.title}'`)
         setTimeout(() => {
           setSuccessMessage(null)
         }, 5000)
@@ -120,7 +119,7 @@ const App = () => {
     catch {
       setErrorMessage(`Unauthorized to Delete`)
       setTimeout(() => {
-        setSuccessMessage(null)
+        setErrorMessage(null)
       }, 5000)
     } 
   }
@@ -177,7 +176,6 @@ const App = () => {
   const handleExpandAll = () => {
     setExpandAll(!expandAll);
     setIsExpanded(!isExpanded);
-    setExpandedViews(expandAll ? blogs.length : 0);
   }
   
   return (
@@ -206,7 +204,6 @@ const App = () => {
             saveLike={saveLike}
             setExpandAll={setExpandAll}
             expandAll={expandAll}
-            setExpandedViews={setExpandedViews}
             isExpanded={isExpanded}
             setIsExpanded={setIsExpanded}
             />

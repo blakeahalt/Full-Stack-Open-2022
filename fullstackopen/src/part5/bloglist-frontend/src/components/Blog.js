@@ -32,7 +32,8 @@ const Blog = ({blog, deleteBlog, saveLike, user, expandAll}) => {
     <button style = {{marginLeft: 10}} onClick={(event) => saveLike(blog.id)}>Like</button>  
     </div>
     <div>User: {user}</div>
-    <button style = {{marginTop: 10, marginBottom: 5, marginLeft: 5}} onClick={(event) => deleteBlog(blog.id)}>Delete</button>
+    {user ? <button style = {{marginTop: 10, marginBottom: 5, marginLeft: 5}} onClick={(event) => deleteBlog(blog.id)}>Delete</button> : null}
+    
     <button style = {{marginLeft: 10}} onClick={() => setToggleView(!toggleView)}>Collapse View</button>
   </div>
     </>
