@@ -1,0 +1,102 @@
+GET http://localhost:3001/api/blogs
+Content-Type: application/json
+
+###
+POST http://localhost:3001/api/blogs/ HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJwb3N0ZXIiLCJpZCI6IjYzYzRmNGE3MWZkNjM1ZTJhYzY0OTc3YyIsImlhdCI6MTY3Mzg4NjM3OCwiZXhwIjoxNjczODg5OTc4fQ.aw0viDd9WkbxBDnAG1rihRG7KBgrATNE4lD883EHA7g
+
+{
+       "url": "http://test13",
+       "_id": "5a422bc61b54a676234dtest13",
+       "title": "Test13",
+       "author": "Test13",
+       "likes": 0,
+       "__v": 0
+}
+
+###
+PUT http://localhost:3001/api/blogs/ HTTP/1.1
+Content-Type: application/json
+
+{
+       "title": "test_put",
+       "author": "test",
+       "url": "test",
+       "likes": "1"
+}
+
+
+
+POST http://localhost:3001/api/persons/ HTTP/1.1
+Content-Type: application/json
+
+{
+       "name": "Jeb",
+       "number": "131231312"
+}
+
+###
+PUT http://localhost:3001/api/persons/:id/ HTTP/1.1
+Content-Type: application/json
+
+{
+       "name": "John",
+       "number": "333333333"
+}
+
+###
+POST http://localhost:3001/api/notes/ HTTP/1.1
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJwb3N0ZXIiLCJpZCI6IjYzYzRmNGE3MWZkNjM1ZTJhYzY0OTc3YyIsImlhdCI6MTY3Mzg4NjU4MiwiZXhwIjoxNjczODkwMTgyfQ.9oG5iYI2pSYuR4___X_fhBBS36lKP3_Z6tx6ImgHLfM
+
+{
+       "content": "Single Page Apps use token authorization"
+}
+
+
+###
+POST http://localhost:3001/api/users/ HTTP/1.1
+Content-Type: application/json
+
+{
+       "username": "mluukkai",
+       "name": "Matti Luukkainen",
+       "password": "salainen"
+}
+
+###
+POST http://localhost:3001/api/login/ HTTP/1.1
+Content-Type: application/json
+
+{
+       "username": "bposter",
+       "password": "Bposter"
+}
+
+###
+GET http://localhost:3001/api/users
+Content-Type: application/json
+
+###
+GET http://localhost:3001/api/notes
+
+###
+GET http://localhost:3001/info
+
+###
+GET http://localhost:3001/api/persons
+
+###
+GET http://localhost:3001/api/persons/977
+
+###
+DELETE http://localhost:3001/api/persons/340
+
+###
+DELETE http://localhost:3001/api/blogs/63c552b57b8b6db504659201 HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJwb3N0ZXIiLCJpZCI6IjYzYzRmNGE3MWZkNjM1ZTJhYzY0OTc3YyIsImlhdCI6MTY3NDQ0NDY5OSwiZXhwIjoxNjc0NDQ4Mjk5fQ.ikVNx8vk1s2QZJJytBWBVLmyP0h8N3j7djNuGlLBZ1A
+
+###
+DELETE http://localhost:3001/api/users/63c53febfb540891d1f718f3
+

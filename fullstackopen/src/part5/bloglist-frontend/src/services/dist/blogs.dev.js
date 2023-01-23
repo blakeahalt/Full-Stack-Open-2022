@@ -91,10 +91,9 @@ var remove = function remove(blogId) {
 
         case 3:
           response = _context3.sent;
-          console.log(response);
           return _context3.abrupt("return", response.data);
 
-        case 6:
+        case 5:
         case "end":
           return _context3.stop();
       }

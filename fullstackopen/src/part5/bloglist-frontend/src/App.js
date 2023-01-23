@@ -109,12 +109,15 @@ const App = () => {
   }
 
 // Like button click handler
-  const saveLike = async (likedBlog) => {
-    await blogService.update(likedBlog.id, likedBlog)
+  const saveLike = async (likedBlogId) => {
+    console.log('likedBlog', likedBlogId)
+    let blog = blogs.find(b => b.id === likedBlogId)
+    blog.likes += 1
+    await blogService.update(likedBlogId, blog)
     blogService.getAll()
       .then(blogs => { setBlogs(blogs) })
       .then(() => {
-        setSuccessMessage(`You liked '${likedBlog.title}'!`)
+        setSuccessMessage(`You liked '${blog.title}'!`)
         setTimeout(() => {
           setSuccessMessage(null)
         }, 5000)
@@ -122,12 +125,13 @@ const App = () => {
   }
 
 // Delete button click handler
-  const deleteBlog = async (blogToDelete) => {
-    await blogService.remove(blogToDelete.id)
+  const deleteBlog = async (blogId) => {
+    let blog = blogs.find(b => b.id === blogId)
+    await blogService.remove(blogId)
     blogService.getAll()
       .then(blogs => { setBlogs(blogs) })
       .then(() => {
-        setSuccessMessage(`Deleted blog '${blogToDelete.title}'!`)
+        setSuccessMessage(`Deleted blog '${blog.title}'!`)
         setTimeout(() => {
           setSuccessMessage(null)
         }, 5000)
@@ -220,7 +224,7 @@ const App = () => {
           {blogForm()}
         </div>
         <br/>
-        {Object.keys(blogs).map(blogKey => {return(<Blog key={blogKey} blog={blogs[blogKey]} />)})}
+        {Object.keys(blogs).map(blogKey => {return(<Blog key={blogKey} blog={blogs[blogKey]} deleteBlog={deleteBlog} saveLike={saveLike}/>)})}
       </>
       }
     </div>
