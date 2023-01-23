@@ -5,13 +5,13 @@ const Notification = ({ errorMessage, successMessage }) => {
     // } else if (errorMessage) {
     if (errorMessage) {
       return (
-        <div className="error">
+        <div style={{marginBottom: 20}} className="error">
           {errorMessage}
         </div>
       )
     } else if (successMessage) {
       return (
-        <div className="success">
+        <div style={{marginBottom: 20}} className="success">
           {successMessage}
         </div>
     )

@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import Togglable from './components/Togglable'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
 import './App.css'
@@ -9,23 +11,26 @@ import './App.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newUrl, setNewUrl] = useState('')
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
+  // const [newUrl, setNewUrl] = useState('') // moved to BlogForm.js
+  // const [newTitle, setNewTitle] = useState('') // moved to BlogForm.js
+  // const [newAuthor, setNewAuthor] = useState('') // moved to BlogForm.js
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  // const [notification, setNotification] = useState({
-  //   message:null,
-  //   successful:null
-  // })
+  // const [toggleView, setToggleView] = useState(true)
+  const [expandAll, setExpandAll] = useState(true)
+  const [isExpanded, setIsExpanded] = useState(false)
+  const [expandedViews, setExpandedViews] = useState(0)
+
+
+  const blogFormRef = useRef()
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs)
-    )  
+    blogService.getAll()
+    .then(blogs => blogs.sort((a,b) => b.likes-a.likes))
+    .then(sortedBlogs => setBlogs(sortedBlogs))  
   }, [])
 
   useEffect(() => {
@@ -36,19 +41,6 @@ const App = () => {
       setUser(user)
     }
   }, [])
-
-  // const showNotification =(messageContent,successfulMode) => {
-  //   setNotification({
-  //     message: messageContent,
-  //     successful: successfulMode
-  //   })
-  //   setTimeout(() => {
-  //     setNotification({
-  //       message:null,
-  //       successful:null
-  //     })
-  //   },5000)
-  // }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -78,34 +70,18 @@ const App = () => {
     }
   }
   
-  const addBlog = async (event) => {
-    event.preventDefault()
-    try {
-    const blogToAdd = {
-      title: newTitle,
-      author: newAuthor,
-      url: newUrl,
-    }
-      
+  const addBlog = (blogToAdd) => {
+      blogFormRef.current.toggleVisibility() 
       blogService
         .create(blogToAdd)
         .then(returnedBlog => {
           setBlogs([...blogs, returnedBlog])
-          setNewTitle('')
-          setNewAuthor('')
-          setNewUrl('')
         })
         .then(() => {setSuccessMessage(`A new blog '${blogToAdd.title}' by ${blogToAdd.author} has been added!`)
             setTimeout(() => {
               setSuccessMessage(null)
             }, 5000)
         })
-      } catch (exception) {
-        setErrorMessage('Blog could not be added')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
-      }
   }
 
 // Like button click handler
@@ -126,16 +102,27 @@ const App = () => {
 
 // Delete button click handler
   const deleteBlog = async (blogId) => {
-    let blog = blogs.find(b => b.id === blogId)
-    await blogService.remove(blogId)
-    blogService.getAll()
-      .then(blogs => { setBlogs(blogs) })
-      .then(() => {
-        setSuccessMessage(`Deleted blog '${blog.title}'!`)
-        setTimeout(() => {
-          setSuccessMessage(null)
-        }, 5000)
-      })
+    try {
+      let blog = blogs.find(b => b.id === blogId)
+      let res = window.confirm(`Remove ${blog.title} by ${blog.author}?`)
+      if (res) {
+      await blogService.remove(blogId)
+      blogService.getAll()
+        .then(blogs => { setBlogs(blogs) })
+        .then(() => {
+          setSuccessMessage(`Deleted blog '${blog.title}'!`)
+          setTimeout(() => {
+            setSuccessMessage(null)
+          }, 5000)
+        })
+      } 
+    }
+    catch {
+      setErrorMessage(`Unauthorized to Delete`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
+    } 
   }
 
   
@@ -145,15 +132,15 @@ const App = () => {
     setUser(null)
   }
 
-  const handleUrlChange = (event) => {
-    setNewUrl(event.target.value)
-  }
-  const handleTitleChange = (event) => {
-    setNewTitle(event.target.value)
-  }
-  const handleAuthorChange = (event) => {
-    setNewAuthor(event.target.value)
-  }
+  // const handleUrlChange = (event) => {  // moved to BlogForm.js
+  //   setNewUrl(event.target.value)
+  // }
+  // const handleTitleChange = (event) => {  // moved to BlogForm.js
+  //   setNewTitle(event.target.value)
+  // }
+  // const handleAuthorChange = (event) => {  // moved to BlogForm.js
+  //   setNewAuthor(event.target.value)
+  // }
 
 
   const loginForm = () => (
@@ -176,55 +163,56 @@ const App = () => {
           onChange={({ target }) => setPassword(target.value)}
         />
       </div>
-      <button type="submit">login</button>
+      <button style={{marginTop: 10}} type="submit">login</button>
     </form>      
   )
 
+
   const blogForm = () => (
-    <form onSubmit={addBlog}>
-      <div>
-        Url:<input
-          value={newUrl}
-          onChange={handleUrlChange}
-        />
-      </div>
-      <div>
-        Title: <input
-          value={newTitle}
-          onChange={handleTitleChange}
-        />
-      </div>
-      <div>
-        Author: <input
-          value={newAuthor}
-          onChange={handleAuthorChange}
-        />
-      </div>
-      <div>
-        <button type="submit">save</button>
-      </div>
-    </form>  
+    <Togglable buttonLabel='new blog' ref={blogFormRef}>
+      <BlogForm createBlog={addBlog} />
+    </Togglable>
   )
 
+  const handleExpandAll = () => {
+    setExpandAll(!expandAll);
+    setIsExpanded(!isExpanded);
+    setExpandedViews(expandAll ? blogs.length : 0);
+  }
+  
   return (
     <div>
       <h2>blogs</h2>
 
-      {/* {notification.message!==null && notification.successful!==null &&
-        <Notification message={notification.message} successful={notification.successful}/>} */}
       <Notification errorMessage={errorMessage} successMessage={successMessage}  />
 
       {user === null ?
       loginForm() :
       <>
         <div>
-          <p>{user.name} logged-in</p>
-          <button onClick={handleLogOut}>Logout</button>
-          <h2>create new</h2>
+          {user.name} logged-in
+          <button  style={{marginLeft: 10, marginBottom: 10}} onClick={handleLogOut}>Logout</button>
           {blogForm()}
         </div>
         <br/>
-        {Object.keys(blogs).map(blogKey => {return(<Blog key={blogKey} blog={blogs[blogKey]} deleteBlog={deleteBlog} saveLike={saveLike}/>)})}
+
+        {Object.keys(blogs).map(blogKey => {
+          return(<Blog 
+            user={user.name} 
+            key={blogKey} 
+            blogs={blogs} 
+            blog={blogs[blogKey]} 
+            deleteBlog={deleteBlog} 
+            saveLike={saveLike}
+            setExpandAll={setExpandAll}
+            expandAll={expandAll}
+            setExpandedViews={setExpandedViews}
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
+            />
+            )})}
+          <button onClick={handleExpandAll}>{expandAll ? 'Expand All' : 'Collapse All'}</button>
+
       </>
       }
     </div>
