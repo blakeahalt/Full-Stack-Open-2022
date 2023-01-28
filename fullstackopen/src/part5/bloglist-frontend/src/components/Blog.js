@@ -3,11 +3,16 @@ import { useState, useEffect } from 'react'
 
 const Blog = ({blog, deleteBlog, saveLike, user, expandAll}) => {
     const [toggleView, setToggleView] = useState(true)
+    const [likes, setLikes] = useState(blog.likes)
 
     useEffect(() => {
       expandAll ? setToggleView(true) : setToggleView(false);
     }, [expandAll])
     
+    const handleLike = () => {
+      setLikes(likes + 1);
+      saveLike(blog.id);
+    };
 
     const blogStyle = {
     paddingTop: 10,
@@ -24,12 +29,13 @@ const Blog = ({blog, deleteBlog, saveLike, user, expandAll}) => {
   {toggleView ? 
   <div style={{marginLeft: 5, marginBottom: 5}}>{blog.title} <button style = {{marginLeft: 10}} onClick={() => setToggleView(!toggleView)}>View</button></div> : 
   <>
-  <div style={{marginLeft: 5}}>
-    <div>URL: {blog.url}</div>
-    <div>Title: {blog.title}</div>
-    <div>Author: {blog.author}</div>
-    <div>likes: {blog.likes}
-    <button style = {{marginLeft: 10}} onClick={(event) => saveLike(blog.id)}>Like</button>  
+  <div data-testid='view' id='view' style={{marginLeft: 5}}>
+    <div data-testid='url' id='url'>URL: {blog.url}</div>
+    <div data-testid='title' id='title'>Title: {blog.title}</div>
+    <div data-testid='author' id='author'>Author: {blog.author}</div>
+    <div data-testid='likes' id='likes'>likes: {blog.likes}
+    <button data-testid='Like' id='Like' style = {{marginLeft: 10}} onClick={handleLike}>Like</button>  
+    {/* <button data-testid='Like' id='Like' style = {{marginLeft: 10}} onClick={(event) => saveLike(blog.id)}>Like</button>   */}
     </div>
     <div>User: {user}</div>
     {user ? <button style = {{marginTop: 10, marginBottom: 5, marginLeft: 5}} onClick={(event) => deleteBlog(blog.id)}>Delete</button> : null}
