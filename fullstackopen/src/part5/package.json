@@ -18,6 +18,7 @@
   "scripts": {
     "start": "cross-env react-scripts start",
     "dev": "concurrently \"cd .. && cd part4 && cross-env node index.js\" \"npm start\"",
+    "dev:test": "concurrently \"cd .. && cd part4 && cross-env NODE_ENV=test node index.js\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -26,12 +27,14 @@
     "deploy": "git push heroku main",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push && npm run deploy",
     "logs:prod": "heroku logs --tail",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "cypress:open": "cypress open"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
-      "react-app/jest"
+      "react-app/jest",
+      "plugin:cypress/recommended"
     ]
   },
   "browserslist": {
@@ -50,6 +53,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "cypress": "^12.4.1",
+    "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-jest": "^27.2.1",
     "json-server": "^0.17.0",
     "jsonwebtoken": "^9.0.0",

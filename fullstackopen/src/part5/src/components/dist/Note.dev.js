@@ -1,10 +1,8 @@
 // const Note = ({ note, toggleImportance, updateLabel }) => {
 //     const label = note.important ? 'make not important' : 'make important'
-    
 //     return (
 //       <li className="note" data-testid='note'>
 //         {note.content} 
-
 //         <button style={{marginLeft: 10}} onClick={() => {
 //                 toggleImportance(note.id)
 //                 updateLabel([label])
@@ -15,21 +13,6 @@
 //       </li>
 //     )
 //   }
-  
 //   export default Note
-
 // Cypress Test
-const Note = ({ note, toggleImportance }) => {
-  const label = note.important
-    ? 'make not important'
-    : 'make important'
-
-  return (
-    <li className='note'>
-      {note.content}
-      <button onClick={toggleImportance}>{label}</button>
-    </li>
-  )
-}
-
-export default Note
+"use strict";

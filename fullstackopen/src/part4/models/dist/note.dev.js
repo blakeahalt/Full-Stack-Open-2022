@@ -1,5 +1,6 @@
-// const mongoose = require('mongoose')
+"use strict";
 
+// const mongoose = require('mongoose')
 // const noteSchema = new mongoose.Schema({
 //   content: {
 //     type: String,
@@ -13,7 +14,6 @@
 //     ref: 'User'
 //   }
 // })
-
 // noteSchema.set('toJSON', {
 //   transform: (document, returnedObject) => {
 //     returnedObject.id = returnedObject._id.toString()
@@ -21,14 +21,11 @@
 //     delete returnedObject.__v
 //   }
 // })
-
 // module.exports = mongoose.model('Note', noteSchema)
-
 //Cypress test
+var mongoose = require('mongoose');
 
-const mongoose = require('mongoose')
-
-const noteSchema = new mongoose.Schema({
+var noteSchema = new mongoose.Schema({
   content: {
     type: String,
     minlength: 5,
@@ -39,14 +36,12 @@ const noteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
-})
-
+});
 noteSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
+  transform: function transform(document, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
   }
-})
-
-module.exports = mongoose.model('Note', noteSchema)
+});
+module.exports = mongoose.model('Note', noteSchema);

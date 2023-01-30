@@ -1,6 +1,7 @@
+"use strict";
+
 // const mongoose = require('mongoose')
 // const uniqueValidator = require('mongoose-unique-validator')
-
 // const userSchema = new mongoose.Schema({
 //   username: {
 //     type: String,
@@ -21,9 +22,7 @@
 //   //   }
 //   // ],
 // })
-
 // userSchema.plugin(uniqueValidator)
-
 // userSchema.set('toJSON', {
 //   transform: (document, returnedObject) => {
 //     returnedObject.id = returnedObject._id.toString()
@@ -33,15 +32,8 @@
 //     delete returnedObject.passwordHash
 //   }
 // })
-
 // const User = mongoose.model('User', userSchema)
 // module.exports = User
-
-
-
-
-
-
 // // const userSchema = new mongoose.Schema({
 // //   username: String,
 // //   name: String,
@@ -53,13 +45,12 @@
 // //     }
 // //   ],
 // // })
-
-
 //Cypress test
-const mongoose = require('mongoose')
-const uniqueValidator = require('mongoose-unique-validator')
+var mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+var uniqueValidator = require('mongoose-unique-validator');
+
+var userSchema = mongoose.Schema({
   username: {
     type: String,
     required: true,
@@ -67,26 +58,20 @@ const userSchema = mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  notes: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Note'
-    }
-  ],
-})
-
-userSchema.plugin(uniqueValidator)
-
+  notes: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Note'
+  }]
+});
+userSchema.plugin(uniqueValidator);
 userSchema.set('toJSON', {
-  transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString()
-    delete returnedObject._id
-    delete returnedObject.__v
-    // the passwordHash should not be revealed
-    delete returnedObject.passwordHash
+  transform: function transform(document, returnedObject) {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v; // the passwordHash should not be revealed
+
+    delete returnedObject.passwordHash;
   }
-})
-
-const User = mongoose.model('User', userSchema)
-
-module.exports = User
+});
+var User = mongoose.model('User', userSchema);
+module.exports = User;
