@@ -79,6 +79,7 @@ const App = () => {
       .create(noteObject)
       .then(returnedNote => {
         setNotes(notes.concat(returnedNote))
+        noteFormRef.current.toggleVisibility()
       })
   }
   // const addNote = (event) => {
@@ -105,7 +106,6 @@ const App = () => {
     //   important: Math.random() > 0.5,
     //   id: notes.length + 1,
     // }
-
   //   noteService
   //     .create(noteObject)
   //     .then(returnedNote => {
@@ -125,9 +125,9 @@ const App = () => {
     noteService
       .update(id, changedNote)
       .then(returnedNote => {
-        setNotes(notes.map(note => note._id === id ? returnedNote : note))
+        setNotes(notes.map(note => note.id !== id ? note : returnedNote))
       })
-      .catch(error => {
+      .catch(() => {
         setErrorMessage(
           `Note '${note.content}' was already removed from server`
         )
@@ -137,55 +137,6 @@ const App = () => {
         setNotes(notes.filter(n => n.id !== id))
       })
   }
-
-  // const loginForm = () => (
-  //   <form onSubmit={handleLogin}>
-  //     <div>
-  //       username
-  //         <input
-  //         type="text"
-  //         value={username}
-  //         name="Username"
-  //         onChange={({ target }) => setUsername(target.value)}
-  //       />
-  //     </div>
-  //     <div>
-  //       password
-  //         <input
-  //         type="password"
-  //         value={password}
-  //         name="Password"
-  //         onChange={({ target }) => setPassword(target.value)}
-  //       />
-  //     </div>
-  //     <button type="submit">login</button>
-  //   </form>      
-  // )
-  
-  
-  
-  // const loginForm = () => {
-  //   const hideWhenVisible = { display: loginVisible ? 'none' : '' }
-  //   const showWhenVisible = { display: loginVisible ? '' : 'none' }
-
-  //   return (
-  //     <div>
-  //       <div style={hideWhenVisible}>
-  //         <button onClick={() => setLoginVisible(true)}>log in</button>
-  //       </div>
-  //       <div style={showWhenVisible}>
-  //         <LoginForm
-  //           username={username}
-  //           password={password}
-  //           handleUsernameChange={({ target }) => setUsername(target.value)}
-  //           handlePasswordChange={({ target }) => setPassword(target.value)}
-  //           handleSubmit={handleLogin}
-  //         />
-  //         <button onClick={() => setLoginVisible(false)}>cancel</button>
-  //       </div>
-  //     </div>
-  //   )
-  // }
 
   const noteForm = () => (
     <Togglable buttonLabel='new note' ref={noteFormRef}>

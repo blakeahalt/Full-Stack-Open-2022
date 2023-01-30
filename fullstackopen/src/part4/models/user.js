@@ -8,10 +8,16 @@ const userSchema = new mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  blogs: [
+  // blogs: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Blog'
+  //   }
+  // ],
+  notes: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Blog'
+      ref: 'Note'
     }
   ],
 })
@@ -30,20 +36,3 @@ userSchema.set('toJSON', {
 
 const User = mongoose.model('User', userSchema)
 module.exports = User
-
-
-
-
-
-
-// const userSchema = new mongoose.Schema({
-//   username: String,
-//   name: String,
-//   passwordHash: String,
-//   notes: [
-//     {
-//       type: mongoose.Schema.Types.ObjectId,
-//       ref: 'Note'
-//     }
-//   ],
-// })

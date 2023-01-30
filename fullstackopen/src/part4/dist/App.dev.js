@@ -44,6 +44,13 @@ app.use('/api/blogs', blogsRouter); // app.use('/api/blogs', userExtractor, blog
 app.use('/api/notes', notesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/login', loginRouter);
+
+if (process.env.NODE_ENV === 'test') {
+  var testingRouter = require('./controllers/testing');
+
+  app.use('/api/testing', testingRouter);
+}
+
 app.use(unknownEndpoint);
 app.use(errorHandler);
 module.exports = app;
