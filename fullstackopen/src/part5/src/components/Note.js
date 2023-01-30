@@ -3,8 +3,7 @@ const Note = ({ note, toggleImportance, updateLabel }) => {
     
     return (
       <li className="note" data-testid='note'>
-        {/* {note.content}  */}
-        Your awesome note: {note.content}
+        {note.content} 
 
         <button style={{marginLeft: 10}} onClick={() => {
                 toggleImportance(note.id)

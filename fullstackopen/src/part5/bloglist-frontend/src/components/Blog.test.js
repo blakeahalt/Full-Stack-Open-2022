@@ -84,7 +84,7 @@ test('clicking the view button show URL and likes correctly', async () => {
         title: 'This is a title',
         author: 'I am the author',
         url: 'http://',
-        likes: 12
+        likes: 8
     }
     const mockHandlerLikes = jest.fn(() => {
         blog.likes += 1;
@@ -98,7 +98,7 @@ test('clicking the view button show URL and likes correctly', async () => {
     await user.click(likeButton);
 
     expect(mockHandlerLikes).toHaveBeenCalledTimes(2);
-    expect(screen.getByTestId('likes').textContent).toContain('likes: 14');
+    expect(screen.getByTestId('likes').textContent).toContain('likes: 10');
   })
 
   const blog = {

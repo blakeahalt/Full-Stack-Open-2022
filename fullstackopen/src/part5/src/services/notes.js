@@ -1,6 +1,7 @@
 import axios from 'axios'
 // const jwt = require('jsonwebtoken')
-const baseUrl = 'http://localhost:3001/api/notes'
+// const baseUrl = 'http://localhost:3001/api/notes'
+const baseUrl = '/api/notes'
 // const User = require('../models/user')
 // const Note = require('../models/note')
 
