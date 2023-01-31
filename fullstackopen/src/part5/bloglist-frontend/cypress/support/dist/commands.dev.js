@@ -33,17 +33,41 @@ Cypress.Commands.add('login', function (_ref) {
     password: password
   }).then(function (_ref2) {
     var body = _ref2.body;
-    localStorage.setItem("loggedBlogappUser", JSON.stringify(body));
+    localStorage.setItem("loggedBlogUser", JSON.stringify(body));
     cy.visit("http://localhost:3000");
   });
-}); // Cypress.Commands.add('createBlog', ({ content, important }) => {
-// cy.request({
-//     url: 'http://localhost:3001/api/blogs',
-//     method: 'POST',
-//     body: { content, important },
-//     headers: {
-//     'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}`
-//     }
-// })
-// cy.visit('http://localhost:3000')
-// })
+});
+Cypress.Commands.add('createBlog', function (_ref3) {
+  var url = _ref3.url,
+      title = _ref3.title,
+      author = _ref3.author,
+      likes = _ref3.likes;
+  cy.request({
+    url: 'http://localhost:3001/api/blogs',
+    method: 'POST',
+    body: {
+      url: url,
+      title: title,
+      author: author,
+      likes: likes
+    },
+    headers: {
+      'Authorization': "bearer ".concat(JSON.parse(localStorage.getItem('loggedBlogUser')).token)
+    }
+  });
+  cy.visit('http://localhost:3000');
+});
+Cypress.Commands.add('deleteBlog', function (_ref4) {
+  var id = _ref4.id;
+  cy.request({
+    url: 'http://localhost:3001/api/blogs',
+    method: 'DELETE',
+    body: {
+      id: id
+    },
+    headers: {
+      'Authorization': "bearer ".concat(JSON.parse(localStorage.getItem('loggedBlogUser')).token)
+    }
+  });
+  cy.visit('http://localhost:3000');
+});

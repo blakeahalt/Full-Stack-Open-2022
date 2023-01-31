@@ -4,7 +4,7 @@ Content-Type: application/json
 ###
 POST http://localhost:3001/api/blogs/ HTTP/1.1
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJwb3N0ZXIiLCJpZCI6IjYzYzRmNGE3MWZkNjM1ZTJhYzY0OTc3YyIsImlhdCI6MTY3Mzg4NjM3OCwiZXhwIjoxNjczODg5OTc4fQ.aw0viDd9WkbxBDnAG1rihRG7KBgrATNE4lD883EHA7g
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2M2Q4ZTBjYzUwMTI0Y2MyYjE4MjdjNDQiLCJpYXQiOjE2NzUxODU4NDN9.EfAD5Wb_2mr_iEhN7T00nfO3G605B6sIXvFf1sE8Xi0
 
 {
        "url": "http://test13",
@@ -70,8 +70,8 @@ POST http://localhost:3001/api/login/ HTTP/1.1
 Content-Type: application/json
 
 {
-       "username": "bposter",
-       "password": "Bposter"
+       "username": "mluukkai",
+       "password": "salainen"
 }
 
 ###
@@ -94,8 +94,8 @@ GET http://localhost:3001/api/persons/977
 DELETE http://localhost:3001/api/persons/340
 
 ###
-DELETE http://localhost:3001/api/blogs/63ce127b077ade67c4be4a33 HTTP/1.1
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2M2M1NDA3YzQxN2RiMjc1ZjU3MjU5NGMiLCJpYXQiOjE2NzQ0NjU0MTEsImV4cCI6MTY3NDQ2OTAxMX0.9YJZNsOQ-KOhbv60zEdouOTCzKhZuBivFco4Ec-17GA
+DELETE http://localhost:3001/api/blogs/63d964804068b09fd479d118 HTTP/1.1
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1sdXVra2FpIiwiaWQiOiI2M2Q5NjYxZjU1ZjIxZDc1NDJmYzgzZDYiLCJpYXQiOjE2NzUxOTIxNjZ9.djZbCMKPuJXBw3nho-nQx5jcBtXLAP7rpL6k2Gf7vlE
 
 
 ###

@@ -11,15 +11,11 @@ import './App.css'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  // const [newUrl, setNewUrl] = useState('') // moved to BlogForm.js
-  // const [newTitle, setNewTitle] = useState('') // moved to BlogForm.js
-  // const [newAuthor, setNewAuthor] = useState('') // moved to BlogForm.js
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  // const [toggleView, setToggleView] = useState(true)
   const [expandAll, setExpandAll] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -77,10 +73,12 @@ const App = () => {
           setBlogs([...blogs, returnedBlog])
         })
         .then(() => {setSuccessMessage(`A new blog '${blogToAdd.title}' by ${blogToAdd.author} has been added`)
+        blogFormRef.current.toggleVisibility()
             setTimeout(() => {
               setSuccessMessage(null)
             }, 5000)
         })
+        .then()
   }
 
 // Like button click handler
