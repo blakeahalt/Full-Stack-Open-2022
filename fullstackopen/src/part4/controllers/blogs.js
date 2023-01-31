@@ -4,13 +4,13 @@ const Blog = require('../models/blogs')
 const User = require('../models/user')
 
 ////No longer need this function because we can use the middleware tokenExtractor instead
-// const getTokenFrom = request => {
-//   const authorization = request.get('authorization')
-//   if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
-//     return authorization.substring(7)
-//   }
-//   return null
-// }
+const getTokenFrom = request => {
+  const authorization = request.get('authorization')
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    return authorization.substring(7)
+  }
+  return null
+}
 
 blogsRouter.get('/', async (request, response) => {
   const blogs = await Blog.find({}).populate('user', { username: 1, name: 1 })
@@ -48,9 +48,9 @@ blogsRouter.get('/:id', async (request, response) => {
 
 blogsRouter.post('/', async (request, response) => {
   const body = request.body
-  //   const token = getTokenFrom(request)
-  //   const decodedToken = jwt.verify(token, process.env.SECRET)
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  // const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }
@@ -71,13 +71,16 @@ blogsRouter.post('/', async (request, response) => {
   const savedBlog = await blog.save()
   user.blogs = user.blogs.concat(savedBlog._id) //this line enables created blogs to show up in /api/users when a user is logged in
   await user.save()
-  response.status(201).json(savedBlog)
+  response.json(savedBlog)
 })
 
 
 blogsRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params
-  const decodedToken = jwt.verify(request.token, process.env.SECRET)
+  const id = await Blog.findById(request.params.id)
+  // const { id } = request.params
+  const token = getTokenFrom(request)
+  const decodedToken = jwt.verify(token, process.env.SECRET)
+  // const decodedToken = jwt.verify(request.token, process.env.SECRET)
   if (!request.token || !decodedToken.id) {
     return response.status(401).json({ error: 'token missing or invalid' })
   }

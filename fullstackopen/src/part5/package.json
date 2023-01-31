@@ -18,7 +18,7 @@
   "scripts": {
     "start": "cross-env react-scripts start",
     "dev": "concurrently \"cd .. && cd part4 && cross-env node index.js\" \"npm start\"",
-    "dev:test": "concurrently \"cd .. && cd part4 && cross-env NODE_ENV=test node index.js\" \"npm start\"",
+    "dev:test": "concurrently \"cd .. && cd part4 && cross-env NODE_ENV=test nodemon index.js\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",

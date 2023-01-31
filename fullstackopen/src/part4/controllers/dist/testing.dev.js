@@ -1,8 +1,9 @@
 "use strict";
 
-var testingRouter = require('express').Router();
+var testingRouter = require('express').Router(); // const Note = require('../models/note')
 
-var Note = require('../models/note');
+
+var Blog = require('../models/blogs');
 
 var User = require('../models/user');
 
@@ -12,7 +13,7 @@ testingRouter.post('/reset', function _callee(request, response) {
       switch (_context.prev = _context.next) {
         case 0:
           _context.next = 2;
-          return regeneratorRuntime.awrap(Note.deleteMany({}));
+          return regeneratorRuntime.awrap(Blog.deleteMany({}));
 
         case 2:
           _context.next = 4;

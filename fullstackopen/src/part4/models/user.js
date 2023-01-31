@@ -8,18 +8,18 @@ const userSchema = new mongoose.Schema({
   },
   name: String,
   passwordHash: String,
-  // blogs: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: 'Blog'
-  //   }
-  // ],
-  notes: [
+  blogs: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Note'
+      ref: 'Blog'
     }
   ],
+  // notes: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: 'Note'
+  //   }
+  // ],
 })
 
 userSchema.plugin(uniqueValidator)
