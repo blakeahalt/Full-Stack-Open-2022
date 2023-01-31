@@ -9,7 +9,8 @@ var _axios = _interopRequireDefault(require("axios"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var baseUrl = 'http://localhost:3001/api/login'; // const baseUrl = '/api/login'
+// const baseUrl = 'http://localhost:3001/api/login'
+var baseUrl = '/api/login';
 
 var login = function login(credentials) {
   var response;

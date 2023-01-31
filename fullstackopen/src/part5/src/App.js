@@ -17,7 +17,6 @@ const App = () => {
   const [username, setUsername] = useState('') 
   const [password, setPassword] = useState('') 
   const [user, setUser] = useState(null)
-  const [label, setLabel] = useState('')
 
   const noteFormRef = useRef()
 
@@ -27,7 +26,7 @@ const App = () => {
       .then(initialNotes => {
         setNotes(initialNotes)
       })
-  }, [label])
+  }, [])
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
@@ -38,12 +37,6 @@ const App = () => {
     }
   }, [])
 
-  const updateLabel = (label) => {
-    setTimeout(() => {
-        setLabel(label);
-    }, 0);
-}
-
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -51,15 +44,15 @@ const App = () => {
         username, password,
       })
 
+      noteService.setToken(user.token)
       window.localStorage.setItem(
         'loggedNoteappUser', JSON.stringify(user)
       ) 
-      noteService.setToken(user.token)
       setUser(user)
       setUsername('')
       setPassword('')
       console.log('logging in with', username, password)
-    } catch (exception) {
+    } catch {
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -205,7 +198,6 @@ const App = () => {
             key={note.id}
             note={note}
             toggleImportance={toggleImportanceOf}
-            updateLabel={updateLabel}
           />
         )}
       </ul>

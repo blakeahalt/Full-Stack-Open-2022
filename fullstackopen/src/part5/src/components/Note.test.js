@@ -50,7 +50,7 @@ test('clicking the button calls event handler once', async () => {
     const mockHandler = jest.fn()
   
     render(
-      <Note note={note} toggleImportance={mockHandler} updateLabel={mockHandler} />
+      <Note note={note} toggleImportance={mockHandler} />
     )
   
     const user = userEvent.setup()

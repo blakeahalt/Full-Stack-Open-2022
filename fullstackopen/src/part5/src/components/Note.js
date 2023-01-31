@@ -1,13 +1,14 @@
-const Note = ({ note, toggleImportance, updateLabel }) => {
+const Note = ({ note, toggleImportance }) => {
     const label = note.important ? 'make not important' : 'make important'
     
     return (
       <li className="note" data-testid='note'>
+        <span>
         {note.content} 
+        </span>
 
         <button style={{marginLeft: 10}} onClick={() => {
                 toggleImportance(note.id)
-                updateLabel([label])
                 }
             }>
             {label}

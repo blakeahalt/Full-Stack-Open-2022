@@ -1,3 +1,5 @@
+"use strict";
+
 // ***********************************************
 // This example commands.js shows you how to
 // create various custom commands and overwrite
@@ -23,24 +25,25 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-Cypress.Commands.add('login', ({ username, password }) => {
-    cy.request("POST", "http://localhost:3001/api/login", {
-    username, password,
-  }).then(({ body }) => {
-    localStorage.setItem("loggedNoteappUser", JSON.stringify(body));
+Cypress.Commands.add('login', function (_ref) {
+  var username = _ref.username,
+      password = _ref.password;
+  cy.request("POST", "http://localhost:3001/api/login", {
+    username: username,
+    password: password
+  }).then(function (_ref2) {
+    var body = _ref2.body;
+    localStorage.setItem("loggedBlogappUser", JSON.stringify(body));
     cy.visit("http://localhost:3000");
   });
-});
-
-  Cypress.Commands.add('createNote', ({ content, important }) => {
-    cy.request({
-      url: 'http://localhost:3001/api/notes',
-      method: 'POST',
-      body: { content, important },
-      headers: {
-        'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedNoteappUser')).token}`
-      }
-    })
-  
-    cy.visit('http://localhost:3000')
-  })
+}); // Cypress.Commands.add('createBlog', ({ content, important }) => {
+// cy.request({
+//     url: 'http://localhost:3001/api/blogs',
+//     method: 'POST',
+//     body: { content, important },
+//     headers: {
+//     'Authorization': `bearer ${JSON.parse(localStorage.getItem('loggedBlogappUser')).token}`
+//     }
+// })
+// cy.visit('http://localhost:3000')
+// })

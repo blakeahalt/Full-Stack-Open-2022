@@ -70,8 +70,8 @@ POST http://localhost:3001/api/login/ HTTP/1.1
 Content-Type: application/json
 
 {
-       "username": "bposter",
-       "password": "Bposter"
+       "username": "Matti Luukkainen",
+       "password": "salainen"
 }
 
 ###

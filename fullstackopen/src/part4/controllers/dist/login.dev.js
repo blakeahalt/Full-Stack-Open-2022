@@ -56,12 +56,11 @@ loginRouter.post('/', function _callee(request, response) {
           userForToken = {
             username: user.username,
             id: user._id
-          }; // const token = jwt.sign(userForToken, process.env.SECRET)
-          // token expires in 60*60 seconds, that is, in one hour
+          };
+          token = jwt.sign(userForToken, process.env.SECRET); // token expires in 60*60 seconds, that is, in one hour
+          // const token = jwt.sign(userForToken, process.env.SECRET,{ expiresIn: 60*60 }
+          // )
 
-          token = jwt.sign(userForToken, process.env.SECRET, {
-            expiresIn: 60 * 60
-          });
           response.status(200).send({
             token: token,
             username: user.username,

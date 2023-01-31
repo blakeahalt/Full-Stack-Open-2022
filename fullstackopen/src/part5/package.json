@@ -29,7 +29,7 @@
     "logs:prod": "heroku logs --tail",
     "eslint": "eslint .",
     "cypress:open": "cypress open",
-    "cy:open": "start-server-and-test start http://work.local:3030 cy:run"
+    "test:e2e": "cypress run"
   },
   "eslintConfig": {
     "extends": [
