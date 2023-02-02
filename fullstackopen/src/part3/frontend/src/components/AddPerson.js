@@ -1,21 +1,24 @@
 import React from 'react'
 
-const AddPerson = ({ addName, newName, handleNameChange, newNumber, handleNumberChange, persons, setMessage}) => (
-	<div key={persons}>
-        <form onSubmit={addName}>
+const AddPerson = ({ addName, newName, handleNameChange, newNumber, handleNumberChange, persons, setMessage }) => (
+	<div className="addContactForm" key={persons} >
+  <div style={{ justifyContent: 'center'}}>
+        <form  onSubmit={addName}>
               <div>
-                name: <input value={newName} onChange={handleNameChange} />
+                <input value={newName} placeholder="Name" onChange={handleNameChange} />
               </div>
 
               <div>
-                number: <input value={newNumber} onChange={handleNumberChange} />
+                <input value={newNumber} placeholder="Number" onChange={handleNumberChange} />
               </div>
 
               <div>
-                <button type='submit'>Add</button>
+                <button type='submit'>Add Contact</button>
                 <div>{setMessage}</div>
               </div>
+              <br/>
         </form>
+    </div>
     </div>
 );
 

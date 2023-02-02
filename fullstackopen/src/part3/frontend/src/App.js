@@ -1,12 +1,11 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Filter from './components/Filter.js'
 import noteService from './services/Persons.js'
 import AddPerson from './components/AddPerson.js'
 import PhoneBook from './components/PhoneBook.js'
 import Notification from './components/Notification.js'
+import Togglable from './components/Togglable'
 import './index.css'
-
 
 const App = () => {
 
@@ -17,7 +16,55 @@ const App = () => {
   const [newNumber9, setNewNumber9] = useState('')
   const [newFilter, setNewFilter] = useState('')
   const [messageDetails, setMessage] = useState({})
+  const [refresh, setRefresh] = useState(false)
 
+  const [apiData, setApiData] = useState([]);
+
+  useEffect(() => {
+    fetch('https://retoolapi.dev/GQNT8a/data')
+        .then((response) => response.json())
+        .then((apiData) => setApiData(apiData));
+  }, []);
+
+// console.log('apiData', apiData)
+
+// const usedIds = new Set();
+// const userData = apiData.map(x => {
+//   let id = Math.floor(Math.random() * 1000) + 1;
+//   while (usedIds.has(id)) {
+//     id = Math.floor(Math.random() * 1000) + 1;
+//   }
+//   usedIds.add(id);
+
+//   return {
+//     name: x.fullName, 
+//     number: x.isUser.replace(/\D/g, '').replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'),
+//     id: id
+//   };
+// });
+
+// const addedIds = new Set();
+// async function addPersons() {
+//   const newPersons = await Promise.all(
+//     userData.map(async person => {
+//       if (!addedIds.has(person.id)) {
+//         const newbie = await noteService.create(person);
+//         await new Promise(resolve => setTimeout(resolve, 1000));
+//         addedIds.add(person.id);
+//         return newbie;
+//       }
+//     })
+//   );
+//   setPersons(persons.concat(...newPersons.filter(Boolean)));
+// }
+// addPersons()
+
+  useEffect(() => {
+    if (refresh) {
+      window.location.reload(false)
+    }
+  }, [refresh])
+  
   useEffect(() => {
     noteService
       .getAll()
@@ -29,7 +76,7 @@ const App = () => {
   const resetNotification = () => {
     setTimeout(() => {
       setMessage({})
-    }, 3000)
+    }, 2000)
   }
 
   const filteredPerson = !newFilter
@@ -96,17 +143,6 @@ const App = () => {
       let res = window.confirm(`${newName} already exists. To update a new number, click to confirm.`)
       if (res) {
         updateNumber(isFound.id, newPerson)
-        // noteService
-        //   .update(isFound.id, newPerson)
-        //   .then(updatedPerson => {
-        //     setPersons(persons.map(person => person.id ? person : updatedPerson))
-        //     setMessage(
-        //       { message:`Successfully updated ${newName}'s number!`,
-        //         type: 'success' })
-        //   })
-        // resetNotification()
-        // setNewNumber10('') || setNewNumber9('') || setNewNumber('')
-        // setNewName('')
       } else {
         setPersons(persons)
       }
@@ -128,23 +164,6 @@ const App = () => {
     }
   }
 
-  // const updateNumber = (id, newObject) => {
-  //   noteService
-  //     .update(id, newObject)
-  //     .then(updatedPerson => {
-  //       setPersons(persons.map(person => person.id ? person : updatedPerson))
-  //       setMessage(
-  //             { message:`Successfully updated ${newName}'s number!`,
-  //               type: 'success' })
-  //         })
-  //       resetNotification()
-  //       setNewNumber10('') || setNewNumber9('') || setNewNumber('')
-  //       setNewName('')
-  //       //   setNewNumber('')
-  //     //   setNewName('')
-  //     // })
-  // }
-
   const updateNumber = (id, newPerson) => {
     noteService
       .update(id, newPerson)
@@ -160,14 +179,74 @@ const App = () => {
     setNewName('')
   }
 
-  const removePerson = id => {
+  const updatePerson = (id, newName, newNumber) => {
+    const newPerson = { name: newName, number: newNumber };
+    noteService
+      .update(id, newPerson)
+      .then(updatedPerson => {
+        setPersons(persons.map(person => {
+          if (person.id !== id) return person;
+  
+          return {
+            ...person,
+            name: newName !== "" ? newName : person.name,
+            number: newNumber !== "" ? newNumber : person.number
+          };
+        }))
+        setMessage({
+          message:`Successfully updated ${newName}'s information!`,
+          type: 'success'
+        });
+        setTimeout(() => {
+          setMessage({ message: '', type: '' });
+          window.location.reload();
+        }, 10000);
+      })
+      .catch(error => {
+        console.error(error);
+        if (newName && newNumber.length < 10) {
+          setMessage({
+            message: 'Number is too short. Please enter a valid number.',
+            type: 'error'
+          });
+        } else if (newName && newNumber.length > 11) {
+          setMessage({
+            message: 'Number is too long. Please enter a valid number.',
+            type: 'error'
+          });
+        } else if (newName.length === 0) {
+          setMessage({
+            message: 'Please enter a valid name.',
+            type: 'error'
+          });
+        } else if (newNumber.length === 0) {
+          setMessage({
+            message: 'Please enter a valid number.',
+            type: 'error'
+          });
+        } else {
+          setMessage({
+            message: 'There was an error updating the person information.',
+            type: 'error'
+          });
+        }
+      });
+    resetNotification();
+    setNewNumber('');
+    setNewName('');
+  };
+
+  const handleSave = () => {
+    setRefresh(true)
+  }
+
+  const removePerson = (id, newName) => {
     noteService
       .remove(id)
       .then(removedPerson => {
         setPersons(persons.filter(person => person.id !== id))
-        // setPersons(persons)
         setMessage(
-          { message:'Successfully REMOVED!',
+          { message:`Successfully removed!`,
             type: 'success' })
         resetNotification()
         setNewNumber('')
@@ -205,32 +284,51 @@ const App = () => {
   const handleFilter = (event) => {
     setNewFilter(event.target.value)
   }
-
+  
   return (
-    <>
-      <h2>Phonebook</h2>
-      <div>
-        <Filter newFilter={newFilter} handleFilter={handleFilter} />
+    <div className="phoneBookApp">
+      <div className="container">
+        <div className="row">
+            <div className="first-column">
+            <Togglable buttonLabel={
+              <>
+                <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" fill="currentColor" className="bi-bi-person-plus-fill" viewBox="0 0 16 16">
+                  <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                  <path fillRule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z"/>
+                </svg> Add Contact
+              </>
+              }>
+                <AddPerson
+                  messageDetails={messageDetails}
+                  addName={addName}
+                  newName={newName}
+                  newNumber={newNumber}
+                  handleNameChange={handleNameChange}
+                  handleNumberChange={handleNumberChange}
+                  persons={persons}
+                />
+              </Togglable>
+              <br/><br/>
+                <Notification className=".first-column-notification" message={messageDetails.message}
+                  type={messageDetails.type} />
+            </div>
+          <div className="second-column">
+            <PhoneBook
+              messageDetails={messageDetails}
+              newFilter={newFilter} 
+              handleFilter={handleFilter}
+              persons={filteredPerson}
+              remove={removePerson}
+              update={updateNumber}
+              updatePerson={updatePerson}
+              setPersons={setPersons}
+              onSave={handleSave}
+              setMessage={setMessage}
+              />
+          </div>
+        </div>
       </div>
-
-      <h2>Add a new</h2>
-      <AddPerson
-        addName={addName}
-        newName={newName}
-        newNumber={newNumber}
-        handleNameChange={handleNameChange}
-        handleNumberChange={handleNumberChange}
-        persons={persons}
-      />
-      <br></br>
-      <Notification
-        message={messageDetails.message}
-        type={messageDetails.type}/>
-      <PhoneBook
-        persons={filteredPerson}
-        remove={removePerson}
-        update={updateNumber} />
-    </>
+    </div>
   )
 }
 export default App

@@ -9,7 +9,7 @@ const Remove = ({ person, remove }) => {
             } else {
                 return false
             }
-        }}>remove</button>
+        }}>Remove</button>
     )
 }
 

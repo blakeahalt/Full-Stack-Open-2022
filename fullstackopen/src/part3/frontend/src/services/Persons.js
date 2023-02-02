@@ -18,6 +18,11 @@ const remove = (id) => {
   return request.then((response) => response.data)
 }
 
+const removeAll = () => {
+  const request = axios.delete(baseUrl)
+  return request.then((response) => response.data)
+}
+
 const update = (id, newObject) => {
   const request = axios.put(`${baseUrl}/${id}`, newObject)
   return request.then((response) => response.data)
@@ -27,7 +32,8 @@ const noteService = {
   getAll,
   create,
   remove,
-  update
+  update,
+  removeAll
 }
 
 export default noteService

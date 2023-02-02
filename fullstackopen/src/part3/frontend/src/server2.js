@@ -60,11 +60,6 @@ const generateId = () => {
   return getRandomInt()
 }
 
-// app.get('/', function (req, res) {
-//   res.sendFile(path.join(__dirname, '../build'));
-//   // res.sendFile('/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part3/frontend/build/index.html');
-// });
-
 app.get('/api/persons', (request, response) => {
   User.find({}).then(user => {
     response.json(user)
@@ -90,40 +85,6 @@ app.post('/api/persons', (request, response, next) => {
     number: body.number,
   })
 
-  // app.get('/api/persons', (req, res) => {
-  //   res.json(users)
-  // })
-
-  // const foundPerson = users.find(user => user.name === body.name)
-
-  // if (foundPerson) {
-  //   return response.status(400).json({
-  //     error: 'That name already exists'
-  //   })
-  // } else if (body.name.length < 3) {
-  //   return response.status(400).json({
-  //     error: 'Name must have at least 3 letters.'
-  //   })
-  // } else if (body.number.length < 8) {
-  //   return response.status(400).json({
-  //     error: 'Number must be at least 8 digits.'
-  //   })
-  // } else if (!body.name && !body.number) {
-  //   return response.status(400).json({
-  //     error: 'No name or number'
-  //   })
-  // } else if (body.number === undefined || !body.number) {
-  //   return response.status(400).json({
-  //     error: 'No number'
-  //   })
-  // } else if (body.name === undefined || !body.name) {
-  //   return response.status(400).json({
-  //     error: 'No name'
-  //   })
-  // }
-
-  // users = users.concat(user)
-  // response.json(person)
 
   user.save().then(users => {
     response.json(users)
@@ -145,10 +106,6 @@ app.put('/api/persons/:id', (request, response, next) => {
 })
 
 app.delete('/api/persons/:id', (request, response, next) => {
-  // const id = Number(request.params.id)
-  // persons = persons.filter(person => person.id !== id)
-
-  // response.status(204).end()
   User.findByIdAndRemove(request.params.id)
     .then(result => {
       response.status(204).end()
@@ -159,21 +116,6 @@ app.delete('/api/persons/:id', (request, response, next) => {
 
 
 app.get('/api/persons/:id', (request, response, next) => {
-  //   const id = Number(request.params.id)
-  //   const body = persons.find(person => person.id === id)
-
-  //   if (body) {
-  //     response.json(body)
-  //     morgan.token('body', req =>
-  // {
-  //   return JSON.stringify(req.body)
-  // })
-  //   } else {
-  //     return (
-  //       response.send("HTTP Error 404: Not Found"),
-  //       response.status(404).end()
-  //       )
-  //   }
   User.findById(request.params.id)
     .then(user => {
       if (user) {
@@ -215,8 +157,11 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
-// const PORT = process.env.PORT || 8080 || 3001
-// app.listen(PORT, "0.0.0.0")
-app.listen(8080, () => {
+
+// app.listen(3001, () => {                         // dev
+//   console.log('Server running on port')
+// })
+
+app.listen(8080, () => {                         // fly.io
   console.log('Server running on port')
 })

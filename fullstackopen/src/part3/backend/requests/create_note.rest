@@ -28,6 +28,6 @@ GET http://localhost:3001/api/persons
 GET http://localhost:3001/api/persons/977
 
 ###
-DELETE http://localhost:3001/api/persons/684
+DELETE http://localhost:3001/api/persons/542
 
 

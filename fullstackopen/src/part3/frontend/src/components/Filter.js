@@ -2,9 +2,10 @@ import React from 'react'
 
 const Filter = ({ newFilter, handleFilter }) => {
 	return(
-		<div>
-			Filter People:{" "}
-			<input type="text" 
+		<div className='filter'>
+			<input 
+			placeholder='Search'
+			type="text" 
 			value={newFilter} 
 			onChange={handleFilter} />
 		</div>

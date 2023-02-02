@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
       validator: function(v) {
         return /^\d{3}-\d{3}-\d{4}$|^\d{2}-\d{7}$|^\d{2}-\d{8}$|^\d{3}\d{3}-\d{4}$|^\d{2}\d{7}$|^\d{2}\d{8}$/.test(v)
       },
-      message: '12-1234567 or 12-12345678 or 123-123-4567 are acceptable'
+      message: '12-1234567 or 12-12345678 or 123-123-1234 are acceptable'
     }
   }
 })

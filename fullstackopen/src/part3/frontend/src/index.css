@@ -7,7 +7,7 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  width: 350px;
+  width: 325px;
 }
 
 .error {
@@ -19,5 +19,234 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
-  width: 350px;
+  width: 325px;
+}
+
+body{
+  background:#f3f3f3;
+  font-family:"Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:16px;
+}
+h1, h2, h3, h4{
+  color:#333;
+}
+
+
+.addContactForm{
+  float:left;
+  margin-right:30px;
+}
+.addContactForm input{
+  display:block;
+  margin:0 0 10px 0;
+  padding:10px;
+  width:325px;
+  border:1px solid #ccc;
+}
+
+.addContactForm button{
+  background:#f8a035;
+  color:#fff;
+  border:none;
+  font-size:20px;
+}
+
+.phoneBookList{
+  overflow:hidden;
+}
+.phoneBookList .filter {
+  display: flex;
+  justify-content: end;
+}
+.phoneBookList .filter input {
+  width: 150px;
+  height: 20px;
+  font-size: 16px;
+  margin-top: 15px;
+}
+
+.contact{
+  border-bottom:1px solid #ccc;
+}
+.contact h2{
+  padding-bottom: 40px;
+  font-size: 1.2em;
+}
+.contact-number {
+  margin-left: 5px;
+  border-right:1px solid #ccc;
+  min-width: 115px
+}
+.contact-name {
+  border-right:1px solid #ccc;
+  margin-left: -7px
+}
+.contact-action {
+  margin: 5px 0px 5px 5px;
+  justify-content: center;
+}
+.filter {
+  text-align: right;
+  margin-inline-start: 10px;
+  width: 200px;
+}
+.edit-form {
+  display: flex;
+  width: 100%;
+  margin-top: 4px;
+  margin-bottom: 4px;
+}
+.edit-name {
+  padding-right: 5px;
+  margin-left: -10px
+}
+.edit-number {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.edit-action {
+  display: flex;
+  justify-content: center;
+  margin-right: -9px;
+  margin-left: 10px;
+}
+
+button{
+  padding:6px;
+  background:#f8a035;
+  color:#fff;
+  border:none;
+  font-size: 13px
+}
+
+thead tr {
+  display: flex;
+  border-bottom: 1px solid black;
+}
+
+th {
+  flex: 1;
+  padding: 5px;
+  text-align: left;
+  margin: 5px;
+}
+
+td {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  padding: 5px;
+  width: 25%;
+}
+
+td:last-child {
+  border-right: none;
+}
+td:first-child {
+  border-left: none;
+}
+
+input[type='text'] {
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  margin-bottom: 10px;
+  border: none;
+  border-radius: 5px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.container button {
+  width: 100%;
+}
+
+.first-column {
+  width: 325px;
+  position: fixed;
+  margin-top: 30px;
+  margin-bottom: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.first-column-notification{
+  justify-content: center;
+  align-items: center;
+  margin-right: 50px;
+  margin-left: -50px;
+}
+
+.second-column {
+  margin-left: 355px;
+  flex: 1
+
+}
+
+.first-column, .second-column {
+  flex: 1;
+}
+
+.togglableContent button {
+    padding:10px 10px;
+    background:#f8a035;
+    color:#fff;
+    border:none;
+    width: 325px;
+    font-size:20px;
+    margin-bottom: -10px;
+    border-radius: 45px;
+  }
+
+.bi-bi-person-plus-fill {
+  margin-bottom: 4px;
+  margin-right: 50px;
+  margin-left: -85px;
+}
+.phoneBookApp .container .row {
+  display: flex;
+}
+.phoneBookApp .first-column {
+  flex-direction: column;
+}
+
+@media only screen and (max-width: 767px) {
+  .first-column, .second-column {
+  width: 100%;
+  position: relative;
+  margin-left: 0;
+  }
+  
+  .first-column {
+  width: 100%;
+  position: relative;
+  text-align: center;
+  }
+  
+  .addContactForm {
+    float: none;
+    margin-right: 0;
+    display: inline-block;
+  }
+
+  .second-column {
+  margin-left: 0;
+  }
+
+  .contact-action {
+    margin: 5px -7px 5px 5px;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .contact-action {
+    margin: 5px 0 5px 5px;
+    justify-content: center;
+  }
 }

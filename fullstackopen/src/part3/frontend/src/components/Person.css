@@ -1,0 +1,40 @@
+.person-container {
+    margin: 5px;
+    padding: 5px;
+  }
+  
+  .person-table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  
+  .person-header {
+    border-bottom: 1px solid black;
+  }
+  
+  .person-row {
+    display: flex;
+    border-bottom: 1px solid lightgray;
+  }
+  
+  .person-name {
+    padding: 5px;
+  }
+  
+  .person-number {
+    padding: 5px;
+  }
+  
+  .person-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px;
+  }
+  
+  .edit-button {
+    background-color: lightgray;
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 5px;
+  }
