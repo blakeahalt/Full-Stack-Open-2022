@@ -7,16 +7,16 @@ const App = () => {
   const [newFilter, setNewFilter] = useState("")
 
   useEffect(() => {
-    console.log('effect')
+    // console.log('effect')
     axios
       .get('https://restcountries.com/v3.1/all')
       .then(response => {
-        console.log('promise fulfilled')
+        // console.log('promise fulfilled')
         setCountries(response.data)
       })
   } ,[])
 
-  console.log('render', countries.length, 'countries')
+  // console.log('render', countries.length, 'countries')
 
   const filteredCountry = countries.filter((country) =>
   country.name.official.toLowerCase().includes(newFilter.toLowerCase()))

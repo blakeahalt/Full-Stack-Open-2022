@@ -309,7 +309,7 @@ const App = () => {
                 />
               </Togglable>
               <br/><br/>
-                <Notification className=".first-column-notification" message={messageDetails.message}
+                <Notification message={messageDetails.message}
                   type={messageDetails.type} />
             </div>
           <div className="second-column">

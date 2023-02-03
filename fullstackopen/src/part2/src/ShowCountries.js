@@ -1,6 +1,6 @@
 import React from 'react'
 import Weather from './Weather.js'
-import './country.css'
+
 
 const ShowCountries = ({ filteredCountry, newFilter, setNewFilter }) => {
 	if (filteredCountry.length === 1) {

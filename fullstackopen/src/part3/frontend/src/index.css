@@ -7,6 +7,7 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  margin-right: -30px;
   width: 325px;
 }
 
@@ -19,6 +20,7 @@
   border-radius: 5px;
   padding: 10px;
   margin-bottom: 10px;
+  margin-right: -30px;
   width: 325px;
 }
 
@@ -34,11 +36,10 @@ h1, h2, h3, h4{
 
 .addContactForm{
   float:left;
-  margin-right:30px;
 }
 .addContactForm input{
   display:block;
-  margin:0 0 10px 0;
+  margin:0px 0px 10px 0px;
   padding:10px;
   width:325px;
   border:1px solid #ccc;
@@ -169,7 +170,6 @@ input[type='text'] {
   width: 325px;
   position: fixed;
   margin-top: 30px;
-  margin-bottom: 0px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -178,8 +178,6 @@ input[type='text'] {
 .first-column-notification{
   justify-content: center;
   align-items: center;
-  margin-right: 50px;
-  margin-left: -50px;
 }
 
 .second-column {
@@ -199,7 +197,8 @@ input[type='text'] {
     border:none;
     width: 325px;
     font-size:20px;
-    margin-bottom: -10px;
+    margin-bottom: -20px;
+    margin-right: 30px;
     border-radius: 45px;
   }
 
@@ -242,11 +241,48 @@ input[type='text'] {
     margin: 5px -7px 5px 5px;
     justify-content: center;
   }
-}
+  .error {
+    color: red;
+    background: lightgrey;
+    font-size: 20px;
+    text-align: center;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    margin-left: 30px;
+    width: 325px;
+  }
+  .success {
+    color: green;
+    background: lightgrey;
+    font-size: 20px;
+    text-align: center;
+    border-style: solid;
+    border-radius: 5px;
+    padding: 10px;
+    margin-left: 30px;
+    margin-bottom: 10px;
+    width: 325px;
+  }
 
-@media (max-width: 375px) {
-  .contact-action {
-    margin: 5px 0 5px 5px;
-    justify-content: center;
+  .addContactForm button{
+    background:#f8a035;
+    color:#fff;
+    border:none;
+    font-size:20px;
+  }
+
+  .togglableContent button {
+    padding:10px 10px;
+    background:#f8a035;
+    color:#fff;
+    border:none;
+    width: 325px;
+    font-size:20px;
+    margin-bottom: -20px;
+    margin-right: 0px;
+    border-radius: 45px;
   }
 }
+

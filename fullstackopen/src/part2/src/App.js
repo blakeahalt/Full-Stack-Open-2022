@@ -2,14 +2,12 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import ShowCountries from './ShowCountries.js'
 import Weather from './Weather.js'
+import './country.css'
 
 
 const App = () => {
   const [countries, setCountries] = useState([])
   const [newFilter, setNewFilter] = useState("")
-  // const [ weather, setWeather] = useState({})
-  // const apiKey = '7103d3e9355c15bc232acd9442b53344'
-  // console.log('countries', countries)
 
   const filteredCountry = countries.filter((country) => {  
     if (newFilter.toLowerCase() === 'georgia') {
@@ -30,13 +28,9 @@ const App = () => {
     else {
       return country.name.common.toLowerCase().includes(newFilter.toLowerCase());
     }
+  }).map((country, index) => {
+    return {...country, key: index}
   });
-    // console.log('filteredCountry', filteredCountry)
-
-  // const filteredCountry = countries.filter((country) => {
-  //   const lowerCaseName = country.name.common.toLowerCase();
-  //   return lowerCaseName !== 'georgia' && lowerCaseName !== 'south georgia';
-  // });
 
     useEffect(() => {
       axios
@@ -45,23 +39,22 @@ const App = () => {
         setCountries(response.data)
       })
     } ,[])
-
-  // console.log('filteredCountry', filteredCountry)
-  // console.log('filteredCountry[0]', filteredCountry[0])
   
   return (
-    <>
-      <h2 style={{textAlign: 'center'}}>Country Lookup</h2>
-        <div>
-          Filter countries: <input value={newFilter} onChange={event => setNewFilter(event.target.value)} />
-       </div>
-        <div style={{ textAlign: 'center' }}>
-    				<div style={{display: 'inline-block', textAlign: 'left'}}>
-            <ShowCountries filteredCountry={filteredCountry} newFilter={newFilter} setNewFilter={setNewFilter} />
-            </div>
+    <div >
+      <div className='img'/>
+        <h2 style={{textAlign: 'center'}}>Country Lookup</h2>
+          <div>
+            Filter countries: <input value={newFilter} onChange={event => setNewFilter(event.target.value)} />
         </div>
-            <Weather filteredCountry={filteredCountry}/>
-      </>
+          <div style={{ textAlign: 'center' }}>
+              <div style={{display: 'inline-block', textAlign: 'left'}}>
+              <ShowCountries filteredCountry={filteredCountry} newFilter={newFilter} setNewFilter={setNewFilter} />
+              </div>
+          </div>
+              <Weather filteredCountry={filteredCountry}/>
+        </div>
+    // </div>
     )
 }
 

@@ -4,7 +4,7 @@ import Weather from './Weather.js'
 const ShowCountries = ({ filteredCountry, setNewFilter }) => {
 	if (filteredCountry.length === 1) {
 		const country = filteredCountry[0]
-		console.log('country', country)
+		// console.log('country', country)
 		return (
 		<>
 			<div>

@@ -8,7 +8,7 @@ const Weather = ( country ) => {
   
   const [ weather, setWeather] = useState({})
   const apiKey = '7103d3e9355c15bc232acd9442b53344'
-  console.log(country)
+  // console.log(country)
 
   useEffect(() => {
     async function fetchData() {
@@ -33,7 +33,7 @@ const Weather = ( country ) => {
 //     });
 // }, []);
 
-    console.log('weatherData', weather)
+    // console.log('weatherData', weather)
       
       return (
         <>

@@ -79,7 +79,19 @@
     align-items: center;
     justify-content: center;
   }
-  
+
+  .img {
+    background-image: url('./WorldMap.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    width: 100%;
+    background-position: center;
+    opacity: 0.2;
+    position: absolute;
+    z-index: -1;
+  }
+
   @media only screen and (max-width: 500px) {
     /* On small screens, make the flex items stack vertically */
     .container {
@@ -87,6 +99,13 @@
     }
     .responsive-images {
       flex-direction: column;
+    }
+    .img {
+      background-image: url('./MobileMap.jpg');
+      background-size: contain;
+      background-repeat: repeat-y;
+      margin-top: -10px;
+      height: 225vh
     }
   }
   
