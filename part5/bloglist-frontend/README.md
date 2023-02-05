@@ -7,4 +7,4 @@ This part is focused on token based authentication and testing the _React_ compo
 - Testing React apps
 - End to end testing
 ```
-- [bloglist-frontend](/part5/bloglist-frontend) - The app frontend code.
+
