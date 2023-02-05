@@ -44,3 +44,10 @@ Learn React, Redux, Node.js, MongoDB, GraphQL, TypeScript, React Native, GitHub 
 - props.children and proptypes
 - Testing React apps
 - End to end testing
+
+
+### Full Stack Certificate - Parts 0-5
+
+<p align="center">
+  <img height="60%" width="100%"  alt="FullStack Certificate">
+</p>
