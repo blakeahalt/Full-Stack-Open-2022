@@ -1,8 +1,10 @@
-# [Part 5 - Testing React apps](https://fullstackopen.com/en/part5)
+### Part 5 - [Testing React apps](https://fullstackopen.com/en/part5)
 
-In this part we return to the frontend, first looking at different possibilities for testing the React code. We will also implement token based authentication which will enable users to log in to our application.
-
-a. [Login in frontend](https://fullstackopen.com/en/part5/login_in_frontend)  
-b. [props.children and proptypes](https://fullstackopen.com/en/part5/props_children_and_proptypes)  
-c. [Testing React apps](https://fullstackopen.com/en/part5/testing_react_apps)  
-d. [End to end testing](https://fullstackopen.com/en/part5/end_to_end_testing)
+This part is focused on token based authentication and testing the _React_ components using _Jest_, _React Testing Library_ and _Cypress_.
+```
+- Login in frontend
+- props.children and proptypes
+- Testing React apps
+- End to end testing
+```
+- [bloglist-frontend](/part5/bloglist-frontend) - The app frontend code.

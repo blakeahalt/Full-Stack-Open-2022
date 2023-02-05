@@ -1,2 +1,1 @@
-Phonebook on Heroku:
-https://stark-brook-10710.herokuapp.com/
+[Phonebook App](https://crud-phonebook.fly.dev/) - The app deployed on fly.io.

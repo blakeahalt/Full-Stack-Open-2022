@@ -1,11 +1,7 @@
-# [Part 2 - Communicating with server](https://fullstackopen.com/en/part2)
+### Part 6 - [State management with Redux](https://fullstackopen.com/en/part6)
 
-### *[View my Country/Weather Project](http://country.fly.dev/)*
-
-Let's continue our introduction to React. First, we will take a look at how to render a data collection, like a list of names, to the screen. After this, we will inspect how a user can submit data to a React application using HTML forms. Next, our focus shifts towards looking at how JavaScript code in the browser can fetch and handle data stored in a remote backend server. Lastly, we will take a quick look at a few simple ways of adding CSS styles to our React applications.
-
-a. [Rendering a collection, modules](https://fullstackopen.com/en/part2/rendering_a_collection_modules)  
-b. [Forms](https://fullstackopen.com/en/part2/forms)  
-c. [Getting data from server](https://fullstackopen.com/en/part2/getting_data_from_server)  
-d. [Altering data in server](https://fullstackopen.com/en/part2/altering_data_in_server)  
-e. [Adding styles to React app](https://fullstackopen.com/en/part2/adding_styles_to_react_app)
+This part is focused on _Redux_, which can be used for more complex state management of your _React_ app (covers concepts like immutability, global store, actions and reducers). Also this chapter covers how to use _Redux_ with `hooks`, and how to use the old `connect` higher order component when you work on older code bases, and `redux thunk` for asynchronous code.
+```
+- [unicafe-redux](/part6) - rewrites the core of the unicafe exercise from part 1 using Redux state management
+- [redux-anecdotes](/part6)- rebuilds the anecdotes exercise from part 1 using Redux state management and adds REST operations with json-server and redux-thunk
+```
