@@ -26,7 +26,7 @@ Learn React, Redux, Node.js, MongoDB, GraphQL, TypeScript, React Native, GitHub 
 - Adding style to React apps
 
 ### [Part 3 - Programming a server with NodeJS and Express](https://fullstackopen.com/en/part3)
-    ### *[View my Phonebook](https://crud-phonebook.fly.dev/)*
+     ### *[View my Phonebook](https://crud-phonebook.fly.dev/)*
 
 - Node.js and Express
 - Deploying app to internet
