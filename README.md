@@ -44,7 +44,7 @@ This part covers how to display list items in _React_ and how to handle forms. I
 - [courseinfo](/part2/courseInfo) - Extended Course info app from part 1.
 - [phonebook](/part2/phonebook) - Phonebook, add/delete contacts with numbers, edit numbers.
 - [dataforcountries](/part2/countries) - A react app that fetches and displays information from the [REST Countries](https://restcountries.com) and [Open Weather Map](https://openweathermap.org/) API's.
-- [Country/Weather App](http://country.fly.dev/) - The app deployed on fly.io.
+- *[Country/Weather App](http://country.fly.dev/)* - The app deployed on fly.io.
 
 ### Part 3 - [Programming a server with NodeJS and Express](https://fullstackopen.com/en/part3)
 
@@ -57,7 +57,7 @@ This part is focused on the backend. How to: implement a simple _REST API_ in _N
 ```
 - [phonebook: backend](/part3/backend) - The app source backend code.
 - [phonebook: frontend](/part3/frontend) - The app source frontend code.
-- [Phonebook App](https://crud-phonebook.fly.dev/) - The app deployed on fly.io.
+- *[Phonebook App](https://crud-phonebook.fly.dev/)* - The app deployed on fly.io.
 
 ### Part 4 - [Testing Express servers, user administration](https://fullstackopen.com/en/part4)
 
