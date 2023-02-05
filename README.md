@@ -73,7 +73,7 @@ An overall introduction to the course. It introduces to some concepts like HTTP 
 
 This part introduces to _React_ concepts. It covers the basics: components, props, _JSX_ and more advanced concepts: _Javascript_ functionalities that are used a lot in _React_ (`.map()`, `.filter()`, `.reduce()`), destructuring, event handlers in _React_ and passing state to child components, spread operator, hooks and their rules and conditional rendering.
 
-- [courseinfo](/part1/courseinfo) - Simple course information page which counts total number of exercises of the course.
+- [courseinfo](/part1/courseInfo) - Simple course information page which counts total number of exercises of the course.
 - [unicafe](/part1/unicafe) - This app gathers feedbacks and makes statistic.
 - [anecdotes](/part1/anecdotes) - This app provides to vote for a random anecdote, also shows the most voted anecdote.
 
