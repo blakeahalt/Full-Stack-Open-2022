@@ -51,5 +51,5 @@ Learn React, Redux, Node.js, MongoDB, GraphQL, TypeScript, React Native, GitHub 
 ### Full Stack Certificate - Parts 0-5
 
 <p align="center">
-  <img height="60%" width="100%"  src="./fullstackopen/src/certificate-fullstack.png" alt="FullStack Certificate">
+  <img height="60%" width="100%"  src="./certificate-fullstack.png" alt="FullStack Certificate">
 </p>
