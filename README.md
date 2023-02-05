@@ -17,7 +17,7 @@ Learn React, Redux, Node.js, MongoDB, GraphQL, TypeScript, React Native, GitHub 
 - A more complex state, debugging React apps
 
 ### [Part 2 - Communicating with server](https://fullstackopen.com/en/part2)
-&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp; \**[View my Country/Weather Project](http://country.fly.dev/)*
+&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp; \**[View Country/Weather Project](http://country.fly.dev/)*
 
 - Rendering a collection, modules
 - Forms
@@ -26,7 +26,7 @@ Learn React, Redux, Node.js, MongoDB, GraphQL, TypeScript, React Native, GitHub 
 - Adding style to React apps
 
 ### [Part 3 - Programming a server with NodeJS and Express](https://fullstackopen.com/en/part3)
-&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp; \**[View my Phonebook](https://crud-phonebook.fly.dev/)*
+&ensp;&thinsp;&ensp;&thinsp;&ensp;&thinsp; \**[View Phonebook Project](https://crud-phonebook.fly.dev/)*
 
 - Node.js and Express
 - Deploying app to internet
