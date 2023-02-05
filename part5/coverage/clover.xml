@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1674850965136" clover="3.2.0">
+  <project timestamp="1674850965136" name="All files">
+    <metrics statements="25" coveredstatements="24" conditionals="6" coveredconditionals="5" methods="8" coveredmethods="7" elements="39" coveredelements="36" complexity="0" loc="25" ncloc="25" packages="1" files="3" classes="3"/>
+    <file name="Note.js" path="/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part5/src/components/Note.js">
+      <metrics statements="5" coveredstatements="5" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
+      <line num="1" count="1" type="stmt"/>
+      <line num="2" count="4" type="cond" truecount="1" falsecount="1"/>
+      <line num="4" count="4" type="stmt"/>
+      <line num="10" count="1" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+    </file>
+    <file name="NoteForm.js" path="/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part5/src/components/NoteForm.js">
+      <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <line num="3" count="1" type="stmt"/>
+      <line num="4" count="19" type="stmt"/>
+      <line num="6" count="19" type="stmt"/>
+      <line num="7" count="17" type="stmt"/>
+      <line num="10" count="19" type="stmt"/>
+      <line num="11" count="1" type="stmt"/>
+      <line num="12" count="1" type="stmt"/>
+      <line num="17" count="1" type="stmt"/>
+      <line num="20" count="19" type="stmt"/>
+    </file>
+    <file name="Togglable.js" path="/Users/blakeahalt/Documents/GitHub/Full-Stack-Open-2022/fullstackopen/src/part5/src/components/Togglable.js">
+      <metrics statements="11" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="3" coveredmethods="2"/>
+      <line num="5" count="1" type="stmt"/>
+      <line num="6" count="7" type="stmt"/>
+      <line num="8" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="9" count="7" type="cond" truecount="2" falsecount="0"/>
+      <line num="11" count="7" type="stmt"/>
+      <line num="12" count="3" type="stmt"/>
+      <line num="15" count="7" type="stmt"/>
+      <line num="16" count="0" type="stmt"/>
+      <line num="21" count="7" type="stmt"/>
+      <line num="25" count="7" type="stmt"/>
+      <line num="27" count="7" type="stmt"/>
+    </file>
+  </project>
+</coverage>
