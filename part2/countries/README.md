@@ -10,4 +10,4 @@ This part covers how to display list items in _React_ and how to handle forms. I
 ```
 - [dataforcountries](/part2/countries) - A react app that fetches and displays information from the [REST Countries](https://restcountries.com) and [Open Weather Map](https://openweathermap.org/) API's.
 
-- *[Country/Weather App](http://country.fly.dev/)* - The app deployed on fly.io.
+- *[Country/Weather Demo](http://country.fly.dev/)* - Deployed on fly.io.
