@@ -10,7 +10,7 @@ This part covers how to display list items in _React_ and how to handle forms. I
 ```
 - [courseinfo](/part2/courseInfo) - Extended Course info app from part 1.
 - [phonebook](/part2/phonebook) - Phonebook, add/delete contacts with numbers, edit numbers.
-- [dataforcountries](/part2/countries) - A react app that fetches and displays information from the [REST Countries](https://restcountries.com) and [Open Weather Map](https://openweathermap.org/) API's.
+- [dataforcountries](/part2/src) - A react app that fetches and displays information from the [REST Countries](https://restcountries.com) and [Open Weather Map](https://openweathermap.org/) API's.
 
 - *[Country/Weather Demo](http://country.fly.dev/)* - Deployed on fly.io.
 
