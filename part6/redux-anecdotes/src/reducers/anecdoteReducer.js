@@ -17,13 +17,61 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
+// const initialState = anecdotesAtStart.map(asObject)
+const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
 
+// const reducer = (state = initialState, action) => {
+//   switch(action.type) {
+//     case 'NEW_ANECDOTE':
+//       return [...state, action.payload]
+//     case 'VOTE':
+//       const id = action.payload.id
+//       const vote = action.payload.vote
+//       return state.map(anecdote =>
+//         anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
+//     default:
+//       return state
+//   }
+// }
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
+  switch(action.type) {
+    case 'NEW_ANECDOTE':
+      const newState = [...state, action.payload]
+      localStorage.setItem('anecdotes', JSON.stringify(newState))
+      return newState
+    case 'VOTE':
+      const id = action.payload.id
+      const vote = action.payload.vote
+      const updatedState = state.map(anecdote =>
+        anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
+      localStorage.setItem('anecdotes', JSON.stringify(updatedState))
+      return updatedState
+    default:
+      return state
+  }
+}
 
-  return state
+
+export const addVote = (id) => {
+  return {
+    type: 'VOTE',
+    payload: { id, vote: 1 }
+  }
+}  
+
+export const generateId = () =>
+    Number((Math.random() * 1000000).toFixed(0))
+
+
+export const createAnecdote = (content) => {
+  return {
+    type: 'NEW_ANECDOTE',
+    payload: {
+      content,
+      id: generateId(),
+      votes: 0
+    }
+  }
 }
 
 export default reducer
