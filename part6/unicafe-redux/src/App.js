@@ -2,6 +2,7 @@
 // import { useSelector, useDispatch } from 'react-redux'
 import NewNote from './components/NewNote'
 import Notes from './components/Notes'
+import VisibilityFilter from './components/VisibilityFilter'
 
 const App = () => {
   // *Moved to ./components/NewNote
@@ -37,27 +38,20 @@ const App = () => {
   //   dispatch(createNote(content))
   // }
 
+  // *Moved to ./reducers/noteReducer
   // const toggleImportance = (id) => {
   //   dispatch(toggleImportanceOf(id))
   // }
 
+  // *Moved to ./components/VisibilityFilter
+  // const filterSelected = (value) => {
+  //   console.log(value)
+  // }
   return(
     <div>
       <NewNote />
-        {/* *Moved to ./components/NewNote
-        <form onSubmit={addNote}>
-          <input name="note" />
-          <button type="submit">add</button>
-        </form> */}
+      <VisibilityFilter />
       <Notes />
-        {/* *Moved to ./components/Notes
-        <ul>
-          {notes.map(note=>
-            <li key={note.id} onClick={() => toggleImportance(note.id)}>
-              {note.content} <strong>{note.important ? 'important' : ''}</strong>
-            </li>
-          )}
-          </ul> */}
     </div>
   )
 }
