@@ -1,18 +1,19 @@
 // import noteReducer from './noteReducer.js'
-const noteReducer = require('./noteReducer.js').default;
-
+// const noteReducer = require('./noteReducer.js').default;
+import noteReducer from './noteReducer'
 import deepFreeze from 'deep-freeze'
 
 describe('noteReducer', () => {
   test('returns new state with action NEW_NOTE', () => {
     const state = []
     const action = {
-      type: 'NEW_NOTE',
-      payload: {
-        content: 'the app state is in redux store',
-        important: true,
-        id: 1
-      }
+      // type: 'NEW_NOTE',
+      // payload: {
+      //   content: 'the app state is in redux store',
+      //   important: true,
+      //   id: 1
+      type: 'notes/createNote',
+      payload: 'the app state is in redux store',
     }
 
     deepFreeze(state)
@@ -36,10 +37,12 @@ describe('noteReducer', () => {
       }]
   
     const action = {
-      type: 'TOGGLE_IMPORTANCE',
-      payload: {
-        id: 2
-      }
+      // type: 'TOGGLE_IMPORTANCE',
+      type: 'notes/toggleImportanceOf',
+      // payload: {
+      //   id: 2
+      // }
+      payload: 2
     }
   
     deepFreeze(state)
