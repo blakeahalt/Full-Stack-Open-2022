@@ -1,19 +1,20 @@
 import { connect } from 'react-redux';
-import { setFilter } from '../reducers/filterReducer';
+import { filterAnecdotes } from '../reducers/filterReducer';
 
-const AnecdoteFilter = ({ setFilter }) => {
-  const handleChange = ({ target }) => setFilter(target.value);
+const Filter = (props) => {
+    const filterHandler = (event) => {
+        props.filterAnecdotes((event.target.value));
+    };
 
-  const style = {
-    marginBottom: 10,
-    marginTop: 10,
-  };
-
-  return (
-    <div style={style}>
-      filter <input onChange={handleChange} />
-    </div>
-  );
+    return (
+        <div style={{ marginLeft: '10px', marginBottom: '15px' }}>
+            Filter: <input onChange={filterHandler} />
+        </div>
+    );
 };
 
-export default connect(null, { setFilter })(AnecdoteFilter);
+const mapDispatchToProps = {
+    filterAnecdotes
+}
+
+export default connect(null, mapDispatchToProps)(Filter);

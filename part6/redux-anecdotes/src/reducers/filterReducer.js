@@ -6,12 +6,12 @@ const filterSlice = createSlice({
     name: 'filter',
     initialState,
     reducers: {
-        setFilter(state, action) {
+        filterAnecdotes(state, action) {
             state = action.payload
             return state
         }
     }
 })
 
-export const { setFilter } = filterSlice.actions
+export const { filterAnecdotes } = filterSlice.actions
 export default filterSlice.reducer

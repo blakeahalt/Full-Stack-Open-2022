@@ -1,38 +1,30 @@
-import { useDispatch } from 'react-redux'
-// import { createAnecdote, appendAnecdote, addAnecdote } from '../reducers/anecdoteReducer'
-import { connect } from 'react-redux'
-
-import { createAnecdote, addVote } from '../reducers/anecdoteReducer'
-// import { createNotification, notifyMessage, removeNotification, setNotification } from '../reducers/notificationReducer'
-import { showTimedNotification } from '../reducers/notificationReducer';
+import { connect } from 'react-redux';
+import { createAnecdote, generateId } from '../reducers/anecdoteReducer'
+import { setNotification } from '../reducers/notificationReducer';
 
 
-// const NewAnecdote = () => {
-//   const dispatch = useDispatch()
+const NewAnecdote = (props) => {
+  // const dispatch = useDispatch()
 
-//   const addAnecdote = (event) => {
-//     event.preventDefault()
-//     const content = event.target.anecdote.value
-//     event.target.anecdote.value = ''
-//     dispatch(appendAnecdote(content))
-//   }
-
-const AnecdoteForm = () => {
-  const dispatch = useDispatch()
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const content = event.target.anecdote.value;
-    event.target.anecdote.value = '';
-    dispatch(createAnecdote(content));
-    dispatch(showTimedNotification(`created anecdote "${content}"`));
-  };
+  const addAnecdote = (event) => {
+    event.preventDefault()
+    const anecdote = {
+      content: event.target.new.value,
+      id: generateId(),
+      votes: 0,
+      };
+      props.createAnecdote(anecdote);
+      props.setNotification(
+          `Created new anecdote: ${event.target.new.value}`
+      );
+      event.target.new.value = '';
+    };
 
   return (
     <>
-        <h2>create new</h2>
-        <form onSubmit={handleSubmit}>
-            <input name="anecdote" />
+        <h2>Create New:</h2>
+        <form onSubmit={addAnecdote}>
+            <input style={{ width: '50vw', marginLeft: '15px', marginRight: '5px' }} name="new" />
             <button type="submit">create</button>
         </form>
     </>
@@ -40,11 +32,10 @@ const AnecdoteForm = () => {
 }
 
 // export default NewAnecdote
+const mapDispatchToProps = {
+  createAnecdote,
+  setNotification,
+  generateId,
+};
 
-// const mapDispatchToProps = {
-//   createAnecdote,
-//   // notifyMessage
-// }
-
-export default AnecdoteForm
-// export default connect(null, mapDispatchToProps)(AnecdoteForm)
+export default connect(null, mapDispatchToProps)(NewAnecdote);

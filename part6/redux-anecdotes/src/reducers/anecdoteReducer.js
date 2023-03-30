@@ -1,5 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
-
+import { createSlice } from '@reduxjs/toolkit';
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -19,128 +18,42 @@ const asObject = (anecdote) => {
   }
 }
 
-const initialState = anecdotesAtStart.map(asObject)
-// const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
-
-// const reducer = (state = initialState, action) => {
-//   switch(action.type) {
-//     case 'NEW_ANECDOTE':
-//       return [...state, action.payload]
-//     case 'VOTE':
-//       const id = action.payload.id
-//       const vote = action.payload.vote
-//       return state.map(anecdote =>
-//         anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
-//     default:
-//       return state
-//   }
-// }
-
-
-
-// const reducer = (state = initialState, action) => {
-//   switch(action.type) {
-//     case 'NEW_ANECDOTE':
-//       const newState = [...state, action.payload]
-//       localStorage.setItem('anecdotes', JSON.stringify(newState))
-//       return newState
-//     case 'VOTE':
-//       const id = action.payload.id
-//       const vote = action.payload.vote
-//       const updatedState = state.map(anecdote =>
-//         anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
-//       localStorage.setItem('anecdotes', JSON.stringify(updatedState))
-//       return updatedState
-//     default:
-//       return state
-//   }
-// }
-
-// const anecdoteSlice = createSlice({
-//   name: 'anecdotes',
-//   initialState,
-//   reducers: {
-//     createNote(state, action) {
-//       const content = action.payload
-//       state.push({
-//         content,
-//         important: false,
-//         id: generateId(),
-//       })
-//     },
-//     toggleImportanceOf(state, action) {
-//       const id = action.payload
-//       const noteToChange = state.find(n => n.id === id)
-//       const changedNote = { 
-//         ...noteToChange, 
-//         important: !noteToChange.important 
-//       }
-
-//       console.log('state:', state)
-//       // console.log(JSON.parse(JSON.stringify(state)))
-
-
-//       return state.map(note =>
-//         note.id !== id ? note : changedNote 
-//       )     
-//     }
-//   },
-// })
-
+const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
 
 export const generateId = () =>
 Number((Math.random() * 1000000).toFixed(0))
 
-
-// export const createAnecdote = (content) => {
-  //   return {
-    //     type: 'NEW_ANECDOTE',
-    //     payload: {
-      //       content,
-      //       id: generateId(),
-      //       votes: 0
-      //     }
-      //   }
-      // }
-  
-// export const addVote = (id) => {
-//   return {
-//     type: 'VOTE',
-//     payload: { id, vote: 1 }
-//   }
-// }  
-
 const anecdoteSlice = createSlice({
   name: 'anecdotes',
-  initialState,
+  initialState: initialState,
   reducers: {
-    createAnecdote(state, action) {
-      const content = action.payload
-      state.push({
-        content,
-        id: generateId(),
-        votes: 0,
-      })
+    createAnecdote: (state, action) => {
+      state.push(action.payload);
+      localStorage.setItem('anecdotes', JSON.stringify(state));
     },
-    addVote(state, action) {
-      const id = action.payload
-      const anecdoteToChange = state.find(n => n.id === id)
-      const changedAnecdote = { 
-        ...anecdoteToChange, 
-        votes: anecdoteToChange.votes + 1
-      }
-
-            console.log('state:', state)
-
-
-      return state.map(anecdote => 
-        anecdote.id !== id ? anecdote : changedAnecdote)
+    addVote: (state, action) => {
+      const id = action.payload;
+      const votingAnecdote = state.find((anecdote) => anecdote.id === id);
+      const updatedAnecdote = {
+          ...votingAnecdote,
+          votes: votingAnecdote.votes + 1,
+      };
+      const updatedState = state.map((anecdote) =>
+          anecdote.id === id ? updatedAnecdote : anecdote
+      ).sort((a, b) => b.votes - a.votes);
+      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+      return updatedState;
     },
-  },
+    deleteAnecdote: (state, action) => {
+      const votes = action.payload;
+      const updatedState = state.filter((anecdote) => anecdote.votes !== votes);
+      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+      return updatedState;
+    },
+}
 });
 
-
-export const { createAnecdote, addVote } = anecdoteSlice.actions;
-export default anecdoteSlice.reducer;
 // export default reducer
-
+export const { setAnecdotes, addVote, createAnecdote, deleteAnecdote } =
+    anecdoteSlice.actions;
+export default anecdoteSlice.reducer;
