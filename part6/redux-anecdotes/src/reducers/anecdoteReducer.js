@@ -1,4 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import anecdoteService from '../services/anecdotes';
+
+import axios from 'axios';
+
+const baseUrl = 'http://localhost:3001/anecdotes';
+
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -20,16 +26,23 @@ const asObject = (anecdote) => {
 
 const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
 
-export const generateId = () =>
-Number((Math.random() * 1000000).toFixed(0))
+// export const generateId = () =>
+// Number((Math.random() * 1000000).toFixed(0))
+export const generateId = () => {
+  const id = Math.floor(Math.random() * 100000)
+  return id.toString()
+}
 
 const anecdoteSlice = createSlice({
   name: 'anecdotes',
   initialState: initialState,
   reducers: {
+    setAnecdotes(state, action) {
+      return action.payload.sort((a, b) => b.votes - a.votes);
+    },
     createAnecdote: (state, action) => {
       state.push(action.payload);
-      localStorage.setItem('anecdotes', JSON.stringify(state));
+      // localStorage.setItem('anecdotes', JSON.stringify(state));
     },
     addVote: (state, action) => {
       const id = action.payload;
@@ -38,22 +51,57 @@ const anecdoteSlice = createSlice({
           ...votingAnecdote,
           votes: votingAnecdote.votes + 1,
       };
+      axios.put(`${baseUrl}/${id}`, updatedAnecdote).then((response) => {
+        state.map((anecdote) => (anecdote.id !== id ? anecdote : response.data));
+      });
       const updatedState = state.map((anecdote) =>
           anecdote.id === id ? updatedAnecdote : anecdote
       ).sort((a, b) => b.votes - a.votes);
-      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+      // localStorage.setItem('anecdotes', JSON.stringify(updatedState));
       return updatedState;
     },
     deleteAnecdote: (state, action) => {
-      const votes = action.payload;
-      const updatedState = state.filter((anecdote) => anecdote.votes !== votes);
-      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
-      return updatedState;
+      const id = action.payload;
+      axios.delete(`${baseUrl}/${id}`).then(() => {
+        const updatedState = state.filter((anecdote) => anecdote.id !== id);
+        // localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+        return updatedState;
+      });
     },
+    
 }
 });
 
 // export default reducer
 export const { setAnecdotes, addVote, createAnecdote, deleteAnecdote } =
     anecdoteSlice.actions;
+
+  export const initializeAnecdotes = () => {
+    return async (dispatch) => {
+        const anecdotes = await anecdoteService.getAll();
+        dispatch(setAnecdotes(anecdotes));
+    };
+  };
+  
+  export const createNew = (anecdote) => {
+      return async (dispatch) => {
+          const createdAnecdote = await anecdoteService.create(anecdote);
+          dispatch(createAnecdote(createdAnecdote));
+      };
+  };
+  
+  export const voteFor = (id, anecdote) => {
+      return async (dispatch) => {
+          const votingAnecdote = await anecdoteService.update(id, anecdote);
+          dispatch(addVote(votingAnecdote.id));
+      };
+  };
+  
+  export const deleteAnecdotes = (id) => {
+    return async (dispatch) => {
+      const toBeDeleted = await anecdoteService.toDelete(id)
+      dispatch(deleteAnecdote(toBeDeleted.id))
+    }
+  }
+
 export default anecdoteSlice.reducer;

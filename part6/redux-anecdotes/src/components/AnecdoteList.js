@@ -1,6 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { addVote, deleteAnecdote } from '../reducers/anecdoteReducer';
 import { setNotification, showNotification } from '../reducers/notificationReducer';
+import anecdoteService from '../services/anecdotes';
+
 
 const Anecdote = (props) => {
     const dispatch = useDispatch();
@@ -10,9 +12,9 @@ const Anecdote = (props) => {
         dispatch(setNotification(`You voted for ${props.anecdote.content}`, 5));
     };
 
-    const handleDeleteAnecdote = (votes, content) => {
+    const handleDeleteAnecdote = (id, content) => {
       if (window.confirm(`Remove anecdote '${content}'?`)) {
-        dispatch(deleteAnecdote(votes));
+        dispatch(anecdoteService.toDelete(id));
         dispatch(setNotification(`Deleted anecdote: ${content}`, 5));
       }
     };
