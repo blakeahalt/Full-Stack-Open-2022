@@ -26,8 +26,6 @@ const asObject = (anecdote) => {
 
 const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
 
-// export const generateId = () =>
-// Number((Math.random() * 1000000).toFixed(0))
 export const generateId = () => {
   const id = Math.floor(Math.random() * 100000)
   return id.toString()
@@ -51,9 +49,7 @@ const anecdoteSlice = createSlice({
           ...votingAnecdote,
           votes: votingAnecdote.votes + 1,
       };
-      axios.put(`${baseUrl}/${id}`, updatedAnecdote).then((response) => {
-        state.map((anecdote) => (anecdote.id !== id ? anecdote : response.data));
-      });
+      axios.put(`${baseUrl}/${id}`, updatedAnecdote)
       const updatedState = state.map((anecdote) =>
           anecdote.id === id ? updatedAnecdote : anecdote
       ).sort((a, b) => b.votes - a.votes);
@@ -62,11 +58,11 @@ const anecdoteSlice = createSlice({
     },
     deleteAnecdote: (state, action) => {
       const id = action.payload;
-      axios.delete(`${baseUrl}/${id}`).then(() => {
-        const updatedState = state.filter((anecdote) => anecdote.id !== id);
+      // axios.delete(`${baseUrl}/${id}`)
+      const updatedState = state.filter((anecdote) => anecdote.id !== id);
         // localStorage.setItem('anecdotes', JSON.stringify(updatedState));
-        return updatedState;
-      });
+      return updatedState;
+      // });
     },
     
 }
@@ -85,8 +81,8 @@ export const { setAnecdotes, addVote, createAnecdote, deleteAnecdote } =
   
   export const createNew = (anecdote) => {
       return async (dispatch) => {
-          const createdAnecdote = await anecdoteService.create(anecdote);
-          dispatch(createAnecdote(createdAnecdote));
+          const newAnecdote = await anecdoteService.create(anecdote);
+          dispatch(createAnecdote(newAnecdote));
       };
   };
   
@@ -98,10 +94,11 @@ export const { setAnecdotes, addVote, createAnecdote, deleteAnecdote } =
   };
   
   export const deleteAnecdotes = (id) => {
-    return async (dispatch) => {
-      const toBeDeleted = await anecdoteService.toDelete(id)
-      dispatch(deleteAnecdote(toBeDeleted.id))
-    }
-  }
+      return async (dispatch) => {
+        await anecdoteService.toDelete(id);
+        dispatch(deleteAnecdote(id));
+      };
+  };
+  
 
 export default anecdoteSlice.reducer;

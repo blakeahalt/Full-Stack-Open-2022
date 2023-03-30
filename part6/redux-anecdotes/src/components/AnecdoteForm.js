@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import { useDispatch } from 'react-redux'
-import { createAnecdote, generateId } from '../reducers/anecdoteReducer'
-import { setNotification } from '../reducers/notificationReducer';
+import { createNew, generateId } from '../reducers/anecdoteReducer'
+import { notifyMessage } from '../reducers/notificationReducer';
 import anecdoteService from '../services/anecdotes'
 
 
@@ -10,19 +10,15 @@ const NewAnecdote = (props) => {
 
   const addAnecdote = async (event) => {
     event.preventDefault()
-    const anecdote = event.target.new.value
+    const content = event.target.new.value
     event.target.new.value = ''
-      const newAnecdote = await anecdoteService.create(anecdote);
-      dispatch(createAnecdote(newAnecdote))
-      props.setNotification(
-          `Created new anecdote: ${event.target.new.value}`
-      );
-      // event.target.new.value = '';
+    dispatch(createNew(content))
+    dispatch(notifyMessage(`Created new anecdote: ${content}`, 3));
     };
 
   return (
     <>
-        <h2>Create New:</h2>
+      <h2>Create New:</h2>
         <form onSubmit={addAnecdote}>
             <input style={{ width: '50vw', marginLeft: '15px', marginRight: '5px' }} name="new" />
             <button type="submit">create</button>
@@ -33,8 +29,8 @@ const NewAnecdote = (props) => {
 
 // export default NewAnecdote
 const mapDispatchToProps = {
-  createAnecdote,
-  setNotification,
+  createNew,
+  notifyMessage,
   generateId,
 };
 
