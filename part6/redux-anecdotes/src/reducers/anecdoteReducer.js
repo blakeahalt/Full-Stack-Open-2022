@@ -1,3 +1,4 @@
+import { createSlice } from '@reduxjs/toolkit';
 const anecdotesAtStart = [
   'If it hurts, do it more often',
   'Adding manpower to a late software project makes it later!',
@@ -17,61 +18,42 @@ const asObject = (anecdote) => {
   }
 }
 
-// const initialState = anecdotesAtStart.map(asObject)
 const initialState = JSON.parse(localStorage.getItem('anecdotes')) || anecdotesAtStart.map(asObject)
 
-// const reducer = (state = initialState, action) => {
-//   switch(action.type) {
-//     case 'NEW_ANECDOTE':
-//       return [...state, action.payload]
-//     case 'VOTE':
-//       const id = action.payload.id
-//       const vote = action.payload.vote
-//       return state.map(anecdote =>
-//         anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
-//     default:
-//       return state
-//   }
-// }
-const reducer = (state = initialState, action) => {
-  switch(action.type) {
-    case 'NEW_ANECDOTE':
-      const newState = [...state, action.payload]
-      localStorage.setItem('anecdotes', JSON.stringify(newState))
-      return newState
-    case 'VOTE':
-      const id = action.payload.id
-      const vote = action.payload.vote
-      const updatedState = state.map(anecdote =>
-        anecdote.id !== id ? anecdote : { ...anecdote, votes: anecdote.votes + vote })
-      localStorage.setItem('anecdotes', JSON.stringify(updatedState))
-      return updatedState
-    default:
-      return state
-  }
-}
-
-
-export const addVote = (id) => {
-  return {
-    type: 'VOTE',
-    payload: { id, vote: 1 }
-  }
-}  
-
 export const generateId = () =>
-    Number((Math.random() * 1000000).toFixed(0))
+Number((Math.random() * 1000000).toFixed(0))
 
-
-export const createAnecdote = (content) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    payload: {
-      content,
-      id: generateId(),
-      votes: 0
-    }
-  }
+const anecdoteSlice = createSlice({
+  name: 'anecdotes',
+  initialState: initialState,
+  reducers: {
+    createAnecdote: (state, action) => {
+      state.push(action.payload);
+      localStorage.setItem('anecdotes', JSON.stringify(state));
+    },
+    addVote: (state, action) => {
+      const id = action.payload;
+      const votingAnecdote = state.find((anecdote) => anecdote.id === id);
+      const updatedAnecdote = {
+          ...votingAnecdote,
+          votes: votingAnecdote.votes + 1,
+      };
+      const updatedState = state.map((anecdote) =>
+          anecdote.id === id ? updatedAnecdote : anecdote
+      ).sort((a, b) => b.votes - a.votes);
+      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+      return updatedState;
+    },
+    deleteAnecdote: (state, action) => {
+      const votes = action.payload;
+      const updatedState = state.filter((anecdote) => anecdote.votes !== votes);
+      localStorage.setItem('anecdotes', JSON.stringify(updatedState));
+      return updatedState;
+    },
 }
+});
 
-export default reducer
+// export default reducer
+export const { setAnecdotes, addVote, createAnecdote, deleteAnecdote } =
+    anecdoteSlice.actions;
+export default anecdoteSlice.reducer;
