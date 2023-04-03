@@ -1,5 +1,5 @@
-import { connect } from 'react-redux';
-import { filterAnecdotes } from '../reducers/filterReducer';
+// import { connect } from 'react-redux';
+// import { filterAnecdotes } from '../reducers/filterReducer';
 
 const Filter = (props) => {
     const filterHandler = (event) => {
