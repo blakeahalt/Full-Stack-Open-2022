@@ -53,10 +53,19 @@ const style = {
 };
 
 const Notification = () => {
-  const notification = useNotificationValue();
-  if (!notification) return null;
+  const { message } = useNotificationValue();
 
-  return <div style={style}>{notification}</div>;
+  if (!message) {
+    return null;
+  }
+
+  return (
+    message ?
+      <div style={{ backgroundColor: message.includes('too short') ? 'red' : 'lightgreen', padding: '10px', marginBottom: '10px' }}>
+        {message}
+      </div>
+      : null
+  );
 };
 
 export default Notification;

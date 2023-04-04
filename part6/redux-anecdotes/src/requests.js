@@ -9,8 +9,7 @@ const createAnecdote = (newAnecdote) => axios.post(baseUrl, newAnecdote).then((r
 const updateAnecdote = (updatedAnecdote) =>
   axios.put(`${baseUrl}/${updatedAnecdote.id}`, updatedAnecdote).then((res) => res.data);
 
-const deleteAnecdote = (deletedAnecdote) => 
-    axios.delete(`${baseUrl}/${deletedAnecdote.id}`,
-    deletedAnecdote).then((res) => res.data);
+const deleteAnecdote = (id) =>
+  axios.delete(`${baseUrl}/${id}`).then((res) => res.data);
 
 export { getAnecdotes, createAnecdote, updateAnecdote, deleteAnecdote };

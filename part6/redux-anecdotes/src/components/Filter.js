@@ -1,20 +1,29 @@
-// import { connect } from 'react-redux';
-// import { filterAnecdotes } from '../reducers/filterReducer';
+import { useQueryClient } from 'react-query';
 
-const Filter = (props) => {
-    const filterHandler = (event) => {
-        props.filterAnecdotes((event.target.value));
-    };
+const Filter = () => {
+  const queryClient = useQueryClient();
 
-    return (
-        <div style={{ marginLeft: '10px', marginBottom: '15px' }}>
-            Filter: <input onChange={filterHandler} />
-        </div>
-    );
+  const filterHandler = (event) => {
+    const filter = event.target.value;
+    const data = queryClient.getQueryData('anecdotes');
+    if (filter) {
+      const filteredData = data.filter((anecdote) =>
+        anecdote.content.toLowerCase().includes(filter.toLowerCase())
+      );
+      queryClient.setQueryData('anecdotes', filteredData);
+    } else {
+      queryClient.invalidateQueries('anecdotes');
+    }
+  };
+
+  return (
+    <div style={{ marginLeft: '10px', marginBottom: '15px' }}>
+      Filter: <input onChange={filterHandler} />
+    </div>
+  );
 };
 
-const mapDispatchToProps = {
-    filterAnecdotes
-}
+export default Filter;
 
-export default connect(null, mapDispatchToProps)(Filter);
+
+
