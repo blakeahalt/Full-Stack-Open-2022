@@ -8,9 +8,20 @@ const getAll = async () => {
 }
 
 const createNew = async (content) => {
-    const object = { content, important: false }
-    const response = await axios.post(baseUrl, object)
-    return response.data
-  }
+  const object = { content, important: false }
+  const response = await axios.post(baseUrl, object)
+  return response.data
+}
 
-export default { getAll, createNew, }
+// const deleteNote = async (id) => {
+//   const response = await axios.delete(`${baseUrl}/${id}`)
+//   return response.data
+// }
+const toDeleteNote = async (id) => {
+  const response = await axios.delete(`${baseUrl}/${id}`)
+  return response.data
+}
+
+
+
+export default { getAll, createNew, toDeleteNote}

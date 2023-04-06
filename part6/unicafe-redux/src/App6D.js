@@ -1,5 +1,9 @@
 import { useQuery, useMutation, useQueryClient} from 'react-query'
-import { getNotes, createNote, updateNote } from './requests'
+import { getNotes, createNote, updateNote, deleteNote } from './requests'
+import VisibilityFilter from './components/VisibilityFilter'
+import { useSelector } from 'react-redux'
+import DeleteButton from './components/DeleteButton'
+
 
 const App = () => {
     const queryClient = useQueryClient()
@@ -25,20 +29,17 @@ const App = () => {
           queryClient.invalidateQueries('notes')
         },
       })
-    // const toggleImportance = (note) => {
-    //   console.log('toggle importance of', note.id)
-    // }
+
+    const selectedFilter = useSelector(state => state.filter)
+
     const toggleImportance = (note) => {
         updateNoteMutation.mutate({...note, important: !note.important })
       }
 
-    // const result = useQuery('notes', () => axios.get('http://localhost:3001/notes')
-    //  .then(res => res.data))
     const result = useQuery('notes', getNotes, {
         refetchOnWindowFocus: false
     })
-    console.log(result)
-    
+
     if ( result.isLoading ) {
     return <div>loading data...</div>
     }
@@ -52,11 +53,20 @@ const App = () => {
           <input name="note" />
           <button type="submit">add</button>
         </form>
-        {notes.map(note =>
-          <li key={note.id} onClick={() => toggleImportance(note)}>
+        <VisibilityFilter />
+        {notes.filter(note => {
+          if (selectedFilter === 'ALL') {
+            return true
+          }
+          return selectedFilter === 'IMPORTANT' ? note.important : !note.important
+        }).map(note =>
+          <div key={note.id} style={{ display: 'flex', flexDirection: 'row', margin: '5px' }}>
+            <DeleteButton content={note.content} id={note.id} />
+            <div onClick={() => toggleImportance(note)}>
             {note.content} 
             <strong> {note.important ? 'important' : ''}</strong>
-          </li>
+          </div>
+          </div>
         )}
       </div>
     )

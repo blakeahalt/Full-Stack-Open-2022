@@ -1,20 +1,17 @@
-import { filterChange } from '../reducers/filterReducer'
-import { useDispatch } from 'react-redux'
-import { useState } from 'react'
+import { filterChange } from '../reducers/filterReducer';
+import { useDispatch, useSelector } from 'react-redux';
 
 const VisibilityFilter = (props) => {
-  const dispatch = useDispatch()
-
-  const [selectedFilter, setSelectedFilter] = useState('ALL');
+  const dispatch = useDispatch();
+  const selectedFilter = useSelector(state => state.filter);
 
   const filterSelected = (value) => {
     console.log(value)
-    setSelectedFilter(value)
     dispatch(filterChange(value))
   }
   
   return (
-    <div>
+    <div style={{ margin: '15px' }}>
       <div style={{ display: 'flex', alignItems: 'center' }} >
         <div style={{ display: 'flex', marginRight: '10px' }}>
           <input type="radio" name="filter" 
@@ -36,4 +33,4 @@ const VisibilityFilter = (props) => {
   )
 }
 
-export default VisibilityFilter
+export default VisibilityFilter;

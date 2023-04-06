@@ -17,15 +17,17 @@
 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { Provider } from 'react-redux'
 import { QueryClient, QueryClientProvider } from 'react-query'
-
-
 import App from './App6D'
+import store from './store'
 
 const queryClient = new QueryClient()
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <QueryClientProvider client={queryClient}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </QueryClientProvider>
 )
